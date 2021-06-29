@@ -12,10 +12,5 @@ namespace Microsoft.MixedReality.Toolkit.Utilities
         Move = 1 << 0,
         Rotate = 1 << 1,
         Scale = 1 << 2
-            //ㅂ수정중
-            ,
-        Scale_x = 1 << 3,
-        Scale_y = 1 << 4,
-        Scale_z = 1 << 5
     }
 }
