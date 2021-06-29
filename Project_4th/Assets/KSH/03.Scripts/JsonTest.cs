@@ -14,11 +14,23 @@ public struct UserInfo
     public int weight;
     public string[] family;
 
+    public int ID;
+    public int Level;
+    public string Class;
 }
 
 
 public class JsonTest : MonoBehaviour
 {
+    public enum PlayerInformation
+    {
+        ID,
+        Level,
+        Class,
+
+    }
+    public PlayerInformation PI;
+
     public UserInfo info = new UserInfo();
 
     int[] age = new int[10];
