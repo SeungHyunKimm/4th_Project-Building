@@ -27,6 +27,8 @@ public class ObjectData
 {
     public List<ObjInfo> info = new List<ObjInfo>();
 }
+
+// 현재 사용 안함
 [Serializable]
 public class UserData
 {
@@ -34,20 +36,11 @@ public class UserData
     public List<ObjectData> data = new List<ObjectData>();
 }
 
-[Serializable]
-public class aa
-{
-    public List<bb> info = new List<bb>();
-}
 
-[Serializable]
-public class bb
-{
-    public int[] bbb;
-}
 #endregion
 
 // BdObj cs를 확장한다 >> 해당 스크립트 속 속성값 바꿀거라고 선언함
+// 기즈모 체크 해제하면 에디터 안먹힘
 [CustomEditor(typeof(BdTool))]
 public class BdEditor : Editor
 {
