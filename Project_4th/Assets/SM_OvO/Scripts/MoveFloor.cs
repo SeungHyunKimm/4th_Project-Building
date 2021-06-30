@@ -22,6 +22,8 @@ public class MoveFloor : MonoBehaviour
 
     int ButtonCount;
 
+    
+
     // 1단계
     // 만약 블록 1이 사라지면(셋엑티브펄스) 블록 2를 1의 자리로 위치시켜라(블록 1이 사라지면 블록1의 y값을 가져온다.)
     // 만약 블록 2가 사라지면(셋엑티브펄스) 블록 3을 2의 자리로 위치시켜라
@@ -68,6 +70,7 @@ public class MoveFloor : MonoBehaviour
                 //fourthBlock.position = new Vector3(fourthBlock.position.x, thirddir, fourthBlock.position.z);
             }
         }
+
         else if (ButtonCount == 2)
         {
             secondBlock.gameObject.SetActive(false);
@@ -78,18 +81,25 @@ public class MoveFloor : MonoBehaviour
                 //fourthBlock.position = new Vector3(fourthBlock.position.x, seconddir, fourthBlock.position.z);
             }
         }
+
         else if (ButtonCount == 3)
         {
             thirdBlock.gameObject.SetActive(false);
         }
+
         //4층 추후에 업데이트 예정
         //else if(ButtonCount == 4)
         //    {
         //    fourthBlock.gameObject.SetActive(false);
         //    }
+
+        //카운트 횟수가 4번 이상 되면 초기화를 시킨다.
         else if(ButtonCount == 4)
         {
             ButtonCount = 0;
+            
+            
+
         }
 
 
@@ -109,6 +119,12 @@ public class MoveFloor : MonoBehaviour
 
     public void OnClick_FloorReset()
     {
+        Transform tr_f = GameObject.Find("1").GetComponent<Transform>();
+        Transform tr_s = GameObject.Find("2").GetComponent<Transform>();
+        Transform tr_t = GameObject.Find("3").GetComponent<Transform>();
 
+        tr_f = firstBlock;
+        tr_s = secondBlock;
+        tr_t = thirdBlock;
     }
 }
