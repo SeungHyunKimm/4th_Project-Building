@@ -49,14 +49,6 @@ public class MoveFloor : MonoBehaviour
         ButtonCount++;
     }
 
-    void Update()
-    {
-
-
-
-
-
-    }
 
     public void OnClick_SetButton()
     {
@@ -92,31 +84,40 @@ public class MoveFloor : MonoBehaviour
             secondBlock.gameObject.SetActive(true);
             thirdBlock.gameObject.SetActive(true);
 
-
+            
 
         }
 
         if (firstBlock.gameObject.activeSelf == false)
         {
-            print("working?");
             secondBlock.position = new Vector3(secondBlock.position.x, firstdir, secondBlock.position.z);
             thirdBlock.position = new Vector3(thirdBlock.position.x, seconddir, thirdBlock.position.z);
             //fourthBlock.position = new Vector3(fourthBlock.position.x, thirddir, fourthBlock.position.z);
         }
-
+        else
+        {
+            secondBlock.position = new Vector3(secondBlock.position.x, seconddir, secondBlock.position.z);
+            thirdBlock.position = new Vector3(thirdBlock.position.x, thirddir, thirdBlock.position.z);
+        }
         if (secondBlock.gameObject.activeSelf == false)
         {
             thirdBlock.position = new Vector3(thirdBlock.position.x, firstdir, thirdBlock.position.z);
             //fourthBlock.position = new Vector3(fourthBlock.position.x, seconddir, fourthBlock.position.z);
         }
+        else 
+        {
+            if (firstBlock.gameObject.activeSelf == true)
+            {
+                thirdBlock.position = new Vector3(thirdBlock.position.x, thirddir, thirdBlock.position.z);
+            }
 
-
-
+        }
         if (thirdBlock.gameObject.activeSelf == false)
         {
             //fourthBlock.position = new Vector3(fourthBlock.position.x, firstdir, fourthBlock.position.z);
         }
 
+        
         //if (fourthBlock.gameObject.activeSelf == false)
         //{
         //}
@@ -129,18 +130,13 @@ public class MoveFloor : MonoBehaviour
         firstBlock.gameObject.SetActive(true);
         secondBlock.gameObject.SetActive(true);
         thirdBlock.gameObject.SetActive(true);
-        
-        
+
+
         //1,2,3층의 위치를 초기화시켜준다.
 
-
-        Transform tr_f = GameObject.Find("1").transform;
-        Transform tr_s = GameObject.Find("2").transform;
-        Transform tr_t = GameObject.Find("3").transform;
-
-        tr_f = firstBlock;
-        tr_s = secondBlock;
-        tr_t = thirdBlock;
+        firstBlock.position = new Vector3(firstBlock.position.x, firstdir, firstBlock.position.z);
+        secondBlock.position = new Vector3(secondBlock.position.x, seconddir, secondBlock.position.z);
+        thirdBlock.position = new Vector3(thirdBlock.position.x, thirddir, thirdBlock.position.z);
 
     }
 }
