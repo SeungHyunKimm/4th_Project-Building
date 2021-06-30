@@ -418,7 +418,7 @@ public class BdEditor : Editor
         Debug.Log(json);
 
         // 컴퓨터에 빈 텍스트 파일 생성 
-        FileStream file = new FileStream(Application.dataPath + "/Star/Editor/Building_data.text", FileMode.Create);
+        FileStream file = new FileStream(Application.dataPath + "/Star/Editor/Building_data.json", FileMode.Create);
         // 제이슨 데이터를 텍스트로 전환
         byte[] byteData = Encoding.UTF8.GetBytes(json);
         // 파일 덮어쓰기
@@ -430,7 +430,7 @@ public class BdEditor : Editor
 
     void ImportData()
     {
-        string path = Application.dataPath + "/Star/Editor/Building_data.text";
+        string path = Application.dataPath + "/Star/Editor/Building_data.json";
         //파일 있니?
         if (!File.Exists(path)) return;
 
