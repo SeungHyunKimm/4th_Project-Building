@@ -1251,6 +1251,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1218798421}
+  - component: {fileID: 1218798422}
   m_Layer: 0
   m_Name: House_1
   m_TagString: Untagged
@@ -1275,6 +1276,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1218798422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218798420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd794b70cedfb28418efc552ba3949f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstBlock: {fileID: 1534351879}
+  secondBlock: {fileID: 387087988}
+  thirdBlock: {fileID: 505407900}
+  fourthBlock: {fileID: 0}
 --- !u!1 &1226652442
 GameObject:
   m_ObjectHideFlags: 0
@@ -2384,8 +2401,7 @@ MonoBehaviour:
   walls:
   - {fileID: 1083549605185280, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
   - {fileID: 5301351100929939167, guid: 9c4ddc0ec93e1df449e9984dca497355, type: 3}
-  funitures:
-  - {fileID: 4943773361295851263, guid: c0931c4da6d91ea429abedb10290dd16, type: 3}
+  furnitures: []
   products:
   - {fileID: 1333129552543361702, guid: 4cc25867f13a101459aeac0807dc2d30, type: 3}
   building: {fileID: 0}

@@ -8,13 +8,15 @@ public class MoveFloor : MonoBehaviour
     float firstdir;
     float seconddir;
     float thirddir;
-    float fourthdir;
+    //float fourthdir;
 
     // 개별 오브젝트의 위치값(옮겨질 1층 외의 다른 층들)
     public Transform firstBlock;
     public Transform secondBlock;
     public Transform thirdBlock;
-    public Transform fourthBlock;
+
+    //4층 - 추후에 업데이트예정
+    //public Transform fourthBlock;
 
     Vector3 dir;
 
@@ -36,7 +38,9 @@ public class MoveFloor : MonoBehaviour
         firstdir = firstBlock.position.y;
         seconddir = secondBlock.position.y;
         thirddir = thirdBlock.position.y;
-        fourthdir = fourthBlock.position.y;
+
+        //4층 - 추후에 업데이트 예정
+        //fourthdir = fourthBlock.position.y;
     }
     void OnButtonClickFloorSetActiveFalse()
     {
@@ -60,10 +64,11 @@ public class MoveFloor : MonoBehaviour
                 {
                 thirdBlock.gameObject.SetActive(false);
                 }
-            else if(ButtonCount == 4)
-                {
-                fourthBlock.gameObject.SetActive(false);
-                }
+            //4층 추후에 업데이트 예정
+            //else if(ButtonCount == 4)
+            //    {
+            //    fourthBlock.gameObject.SetActive(false);
+            //    }
             else
                 {
                 ButtonCount = 0;
@@ -74,20 +79,20 @@ public class MoveFloor : MonoBehaviour
             {
                 secondBlock.position = new Vector3(secondBlock.position.x, firstdir, secondBlock.position.z);
                 thirdBlock.position = new Vector3(thirdBlock.position.x, seconddir, thirdBlock.position.z);
-                fourthBlock.position = new Vector3(fourthBlock.position.x, thirddir, fourthBlock.position.z);
+                //fourthBlock.position = new Vector3(fourthBlock.position.x, thirddir, fourthBlock.position.z);
             }
 
   
             if (secondBlock.gameObject.activeSelf == false)
             {
                 thirdBlock.position = new Vector3(thirdBlock.position.x, firstdir, thirdBlock.position.z);
-                fourthBlock.position = new Vector3(fourthBlock.position.x, seconddir, fourthBlock.position.z);
+                //fourthBlock.position = new Vector3(fourthBlock.position.x, seconddir, fourthBlock.position.z);
 
             }
 
             if (thirdBlock.gameObject.activeSelf == false)
             {
-                fourthBlock.position = new Vector3(fourthBlock.position.x, firstdir, fourthBlock.position.z);
+                //fourthBlock.position = new Vector3(fourthBlock.position.x, firstdir, fourthBlock.position.z);
             }
 
             //if (fourthBlock.gameObject.activeSelf == false)
