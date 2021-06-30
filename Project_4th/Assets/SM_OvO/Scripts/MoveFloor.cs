@@ -22,7 +22,7 @@ public class MoveFloor : MonoBehaviour
 
     int ButtonCount;
 
-    
+
 
     // 1단계
     // 만약 블록 1이 사라지면(셋엑티브펄스) 블록 2를 1의 자리로 위치시켜라(블록 1이 사라지면 블록1의 y값을 가져온다.)
@@ -34,7 +34,7 @@ public class MoveFloor : MonoBehaviour
     // 버튼을 눌렀을 시 활성화된다.
 
 
-    public void Start()
+    void Start()
     {
         // 최초의 위치값. dir에 y의 값을 할당한다.
         firstdir = firstBlock.position.y;
@@ -52,34 +52,25 @@ public class MoveFloor : MonoBehaviour
     void Update()
     {
 
-        
+
 
 
 
     }
+
     public void OnClick_SetButton()
     {
         ButtonCount++;
         if (ButtonCount == 1)
         {
             firstBlock.gameObject.SetActive(false);
-            if (firstBlock.gameObject.activeSelf == false)
-            {
-                secondBlock.position = new Vector3(secondBlock.position.x, firstdir, secondBlock.position.z);
-                thirdBlock.position = new Vector3(thirdBlock.position.x, seconddir, thirdBlock.position.z);
-                //fourthBlock.position = new Vector3(fourthBlock.position.x, thirddir, fourthBlock.position.z);
-            }
+
         }
 
         else if (ButtonCount == 2)
         {
             secondBlock.gameObject.SetActive(false);
 
-            if (secondBlock.gameObject.activeSelf == false)
-            {
-                thirdBlock.position = new Vector3(thirdBlock.position.x, firstdir, thirdBlock.position.z);
-                //fourthBlock.position = new Vector3(fourthBlock.position.x, seconddir, fourthBlock.position.z);
-            }
         }
 
         else if (ButtonCount == 3)
@@ -94,23 +85,37 @@ public class MoveFloor : MonoBehaviour
         //    }
 
         //카운트 횟수가 4번 이상 되면 초기화를 시킨다.
-        else if(ButtonCount == 4)
+        else
         {
             ButtonCount = 0;
-            
-            
+            firstBlock.gameObject.SetActive(true);
+            secondBlock.gameObject.SetActive(true);
+            thirdBlock.gameObject.SetActive(true);
 
+
+
+        }
+
+        if (firstBlock.gameObject.activeSelf == false)
+        {
+            print("working?");
+            secondBlock.position = new Vector3(secondBlock.position.x, firstdir, secondBlock.position.z);
+            thirdBlock.position = new Vector3(thirdBlock.position.x, seconddir, thirdBlock.position.z);
+            //fourthBlock.position = new Vector3(fourthBlock.position.x, thirddir, fourthBlock.position.z);
+        }
+
+        if (secondBlock.gameObject.activeSelf == false)
+        {
+            thirdBlock.position = new Vector3(thirdBlock.position.x, firstdir, thirdBlock.position.z);
+            //fourthBlock.position = new Vector3(fourthBlock.position.x, seconddir, fourthBlock.position.z);
         }
 
 
 
-
-
-
-        //if (thirdBlock.gameObject.activeSelf == false)
-        //{
-        //    //fourthBlock.position = new Vector3(fourthBlock.position.x, firstdir, fourthBlock.position.z);
-        //}
+        if (thirdBlock.gameObject.activeSelf == false)
+        {
+            //fourthBlock.position = new Vector3(fourthBlock.position.x, firstdir, fourthBlock.position.z);
+        }
 
         //if (fourthBlock.gameObject.activeSelf == false)
         //{
@@ -119,12 +124,13 @@ public class MoveFloor : MonoBehaviour
 
     public void OnClick_FloorReset()
     {
-        Transform tr_f = GameObject.Find("1").GetComponent<Transform>();
-        Transform tr_s = GameObject.Find("2").GetComponent<Transform>();
-        Transform tr_t = GameObject.Find("3").GetComponent<Transform>();
+        Transform tr_f = GameObject.Find("1").transform;
+        Transform tr_s = GameObject.Find("2").transform;
+        Transform tr_t = GameObject.Find("3").transform;
 
         tr_f = firstBlock;
         tr_s = secondBlock;
         tr_t = thirdBlock;
+
     }
 }
