@@ -52,51 +52,63 @@ public class MoveFloor : MonoBehaviour
 
         
 
-            if (ButtonCount == 1)
-                {
-                firstBlock.gameObject.SetActive(false);
-                }
-            else if(ButtonCount == 2)
-                {
-                secondBlock.gameObject.SetActive(false);
-                }
-            else if(ButtonCount == 3)
-                {
-                thirdBlock.gameObject.SetActive(false);
-                }
-            //4층 추후에 업데이트 예정
-            //else if(ButtonCount == 4)
-            //    {
-            //    fourthBlock.gameObject.SetActive(false);
-            //    }
-            else
-                {
-                ButtonCount = 0;
-                }
 
-        
+
+    }
+    public void OnClick_SetButton()
+    {
+        ButtonCount++;
+        if (ButtonCount == 1)
+        {
+            firstBlock.gameObject.SetActive(false);
             if (firstBlock.gameObject.activeSelf == false)
             {
                 secondBlock.position = new Vector3(secondBlock.position.x, firstdir, secondBlock.position.z);
                 thirdBlock.position = new Vector3(thirdBlock.position.x, seconddir, thirdBlock.position.z);
                 //fourthBlock.position = new Vector3(fourthBlock.position.x, thirddir, fourthBlock.position.z);
             }
+        }
+        else if (ButtonCount == 2)
+        {
+            secondBlock.gameObject.SetActive(false);
 
-  
             if (secondBlock.gameObject.activeSelf == false)
             {
                 thirdBlock.position = new Vector3(thirdBlock.position.x, firstdir, thirdBlock.position.z);
                 //fourthBlock.position = new Vector3(fourthBlock.position.x, seconddir, fourthBlock.position.z);
-
             }
+        }
+        else if (ButtonCount == 3)
+        {
+            thirdBlock.gameObject.SetActive(false);
+        }
+        //4층 추후에 업데이트 예정
+        //else if(ButtonCount == 4)
+        //    {
+        //    fourthBlock.gameObject.SetActive(false);
+        //    }
+        else if(ButtonCount == 4)
+        {
+            ButtonCount = 0;
+        }
 
-            if (thirdBlock.gameObject.activeSelf == false)
-            {
-                //fourthBlock.position = new Vector3(fourthBlock.position.x, firstdir, fourthBlock.position.z);
-            }
 
-            //if (fourthBlock.gameObject.activeSelf == false)
-            //{
-            //}
+
+
+
+
+        //if (thirdBlock.gameObject.activeSelf == false)
+        //{
+        //    //fourthBlock.position = new Vector3(fourthBlock.position.x, firstdir, fourthBlock.position.z);
+        //}
+
+        //if (fourthBlock.gameObject.activeSelf == false)
+        //{
+        //}
+    }
+
+    public void OnClick_FloorReset()
+    {
+
     }
 }
