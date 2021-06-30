@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 208319687}
   - component: {fileID: 208319686}
   m_Layer: 0
-  m_Name: Wall (1)
+  m_Name: MoveWall(1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +152,7 @@ Transform:
   m_LocalScale: {x: 3.7725184, y: 2.6, z: 0.2}
   m_Children: []
   m_Father: {fileID: 1534351879}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!65 &208319686
 BoxCollider:
@@ -244,7 +244,7 @@ Transform:
   - {fileID: 6066856694636020530}
   - {fileID: 4955284010086427944}
   - {fileID: 1307196453}
-  - {fileID: 489285843}
+  - {fileID: 3080361691752556435}
   m_Father: {fileID: 1218798421}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -446,7 +446,7 @@ GameObject:
   - component: {fileID: 489285845}
   - component: {fileID: 489285844}
   m_Layer: 0
-  m_Name: Stairs (1)
+  m_Name: MoveStair(1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -459,12 +459,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 489285842}
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 16.36, y: -1.42, z: 2.56}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: -1}
+  m_LocalPosition: {x: 4.49, y: 1.2199974, z: 3.06}
   m_LocalScale: {x: 35, y: 50, z: 50}
   m_Children: []
-  m_Father: {fileID: 387087988}
-  m_RootOrder: 3
+  m_Father: {fileID: 1534351879}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!23 &489285844
 MeshRenderer:
@@ -540,7 +540,6 @@ Transform:
   m_LocalPosition: {x: 14.28, y: -11.6, z: 1.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3080361691752556435}
   - {fileID: 543450652467066317}
   - {fileID: 1665155498}
   m_Father: {fileID: 1218798421}
@@ -967,9 +966,10 @@ Transform:
   m_Children:
   - {fileID: 2469673754371811255}
   - {fileID: 1831449353}
-  - {fileID: 1971443505}
   - {fileID: 208319685}
+  - {fileID: 1971443505}
   - {fileID: 1601140738}
+  - {fileID: 489285843}
   m_Father: {fileID: 1218798421}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -1190,7 +1190,7 @@ Transform:
   m_LocalScale: {x: 7.2763596, y: 7.2763596, z: 7.2763596}
   m_Children: []
   m_Father: {fileID: 505407900}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!64 &1665155499
 MeshCollider:
@@ -1443,7 +1443,7 @@ GameObject:
   - component: {fileID: 1971443507}
   - component: {fileID: 1971443506}
   m_Layer: 0
-  m_Name: Wall
+  m_Name: MoveWall(2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1461,7 +1461,7 @@ Transform:
   m_LocalScale: {x: 1.1953067, y: 1.802852, z: 0.2}
   m_Children: []
   m_Father: {fileID: 1534351879}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1971443506
 BoxCollider:
@@ -1590,8 +1590,7 @@ MonoBehaviour:
   walls:
   - {fileID: 1083549605185280, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
   - {fileID: 5301351100929939167, guid: 9c4ddc0ec93e1df449e9984dca497355, type: 3}
-  funitures:
-  - {fileID: 4943773361295851263, guid: c0931c4da6d91ea429abedb10290dd16, type: 3}
+  furnitures: []
   products:
   - {fileID: 1333129552543361702, guid: 4cc25867f13a101459aeac0807dc2d30, type: 3}
   building: {fileID: 0}
@@ -2967,7 +2966,7 @@ Transform:
   - {fileID: 1984926544337578459}
   - {fileID: 6232156912457398307}
   m_Father: {fileID: 505407900}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &545412403204579699
 Transform:
@@ -8806,11 +8805,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2446708109537819945}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.91, y: -2.7, z: 2.15}
+  m_LocalPosition: {x: 22.050001, y: 2.2800016, z: 3.3900003}
   m_LocalScale: {x: 35, y: 50, z: 50}
   m_Children: []
-  m_Father: {fileID: 505407900}
-  m_RootOrder: 0
+  m_Father: {fileID: 387087988}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3080963036648389870
 GameObject:
