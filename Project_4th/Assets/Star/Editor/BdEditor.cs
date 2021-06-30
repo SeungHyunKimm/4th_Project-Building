@@ -13,8 +13,7 @@ using System.Text;
 public class ObjInfo
 {
     //타입 / 모델
-    public int[] objidx;
-    public Transform parent;
+    public int[] objidx = new int[3];
     public Vector3 pos; // localposition
     public Vector3 rot; // eularangle 사용할 것
     public Vector3 scale;
@@ -28,13 +27,24 @@ public class ObjectData
 {
     public List<ObjInfo> info = new List<ObjInfo>();
 }
-    [Serializable]
-    public class UserData
-    {
-       public string userID;
-        public List<ObjectData> data = new List<ObjectData>();
-    }
+[Serializable]
+public class UserData
+{
+    public string userID;
+    public List<ObjectData> data = new List<ObjectData>();
+}
 
+[Serializable]
+public class aa
+{
+    public List<bb> info = new List<bb>();
+}
+
+[Serializable]
+public class bb
+{
+    public int[] bbb;
+}
 #endregion
 
 // BdObj cs를 확장한다 >> 해당 스크립트 속 속성값 바꿀거라고 선언함
@@ -54,6 +64,7 @@ public class BdEditor : Editor
     // 층 오브젝트 배열
     GameObject[] floor;
     // 층별 Y위치
+    // tool obj이 포커싱(선택)이 벗어나면 리셋되버려서 static사용
     static float[] floorY;
     // 층별 on/off
     bool[] isOnOff;
@@ -62,11 +73,8 @@ public class BdEditor : Editor
     // 모델이름
     List<string> objName = new List<string>();
 
-    // 복사할 오브젝트 idx 2개 종류, 모델
-    // 스테틱으로 만든 이유는 빌딩툴 오브젝트를 선택해제 후 다시 선택했을 때
-    // Editor의 경우 아예 이 함수를 새로 만들어버려 내가 선택한 모델이 초기화가 되버림
-    // 이런 문제 해결을 위해 static사용
-    int[] selectedID = new int[2];
+    // 복사할 오브젝트 idx 3개 종류, 모델, 부모가 누군지..
+    int[] selectedID = new int[3];
 
 
     //BdTool obj가 선택되면 한번 호출된다
@@ -105,7 +113,7 @@ public class BdEditor : Editor
 
     void Mouse()
     {
-      
+
         //레이 맞출 포지션 값(마우스) 가져오기 Vector2 형태임
         Event e = Event.current;
 
@@ -126,7 +134,8 @@ public class BdEditor : Editor
                         OnClickCreate(selectedID, hit.point, Vector3.zero, Vector3.one);
                     else
                     {
-                        if (e.shift) {
+                        if (e.shift)
+                        {
                             objInfo.RemoveAt(clones.IndexOf(hit.transform.gameObject));
                             clones.Remove(hit.transform.gameObject);
                             DestroyImmediate(hit.transform.gameObject);
@@ -276,7 +285,7 @@ public class BdEditor : Editor
             if (objName.Count != 0) objName.Clear();
             // 종류 설정하기
             GameObject[] type = bd.walls;
-            if (selectedID[0] == 1) type = bd.funitures;
+            if (selectedID[0] == 1) type = bd.furnitures;
             if (selectedID[0] == 2) type = bd.products;
 
             //목록에 이름 넣기
@@ -287,7 +296,7 @@ public class BdEditor : Editor
         }
 
         // 배열의 개수가 안맞을 때 idx오류 발생함 >> 맨 마지막 번호로 바꿔준다.
-        if ( selectedID[1] > objName.Count - 1 || selectedID[1] < 0) selectedID[1] = objName.Count - 1;
+        if (selectedID[1] > objName.Count - 1 || selectedID[1] < 0) selectedID[1] = objName.Count - 1;
         // 모델목록 생성 및 선택적용
         selectedID[1] = EditorGUILayout.Popup("모델", selectedID[1], objName.ToArray());
 
@@ -295,6 +304,9 @@ public class BdEditor : Editor
         if (GUILayout.Button("Import")) { ImportData(); }
         EditorGUILayout.Space();
         if (GUILayout.Button("Export")) { ExportData(); }
+
+
+
 
     }
 
@@ -325,48 +337,60 @@ public class BdEditor : Editor
         bd.isOnOff = isOnOff;
     }
 
-    //idx는 selectedID / 0 == 종류, 1 == 오브젝트
+    //idx는 selectedID / 0 == 종류, 1 == 오브젝트 2 == 부모
     void OnClickCreate(int[] idx, Vector3 pos, Vector3 rot, Vector3 scale)
     {
 
         GameObject[] obj = bd.walls;
-        if (idx[0] == 1) obj = bd.funitures;
-        if (idx[0] == 2) obj = bd.products;
+        string type = "Walls";
+        if (idx[0] == 1) { obj = bd.furnitures; type = "Furnitures"; }
+        if (idx[0] == 2) { obj = bd.products; type = "Products"; }
+
+        Transform parent = floor[idx[2]].transform;
 
         //전체 빌딩 찾기
         if (building != null)
         {
 
-            // 1~3층 찾기 0번 자식은 table이라 1번부터 찾기
-            for (int i = 1; i < building.childCount; i++)
+            GameObject a = (GameObject)PrefabUtility.InstantiatePrefab(obj[idx[1]]);
+
+            if (idx[2] == 0)
             {
-                Transform floor = building.GetChild(i);
-                // ?층이 활성화 상태이면 해당층에 오브젝트를 복제한다.
-                if (floor.gameObject.activeSelf)
+                // 1~3층 찾기 0번 자식은 table이라 1번부터 찾기
+                for (int i = 1; i < building.childCount; i++)
                 {
-
-                    GameObject a = (GameObject)PrefabUtility.InstantiatePrefab(obj[idx[1]]);
-                    ObjInfo info = new ObjInfo();
-                    //해당 층에 귀속
-                    a.transform.SetParent(floor);
-
-                    // 데이터 및 복제 프리펩 값세팅
-                    info.scale = a.transform.localScale = scale;
-                    info.pos = a.transform.position = pos;
-                    info.rot = a.transform.localEulerAngles = rot;
-                    info.objidx = idx;
-                    info.parent = floor;
-                    objInfo.Add(info);
-                    clones.Add(a);
-                    Debug.Log(floor.name + "\n" + a.name);
-                    break;
+                    if (floor[i].activeSelf)
+                    {
+                        //해당 층에 귀속
+                        parent = floor[i].transform;
+                        idx[2] = i;
+                        break;
+                    }
                 }
             }
+            else { }
+
+            ObjInfo info = new ObjInfo();
+            // 데이터 및 복제 프리펩 값세팅
+            a.transform.SetParent(parent);
+            info.scale = a.transform.localScale = scale;
+            info.pos = a.transform.localPosition = pos;
+            info.rot = a.transform.localEulerAngles = rot;
+            for (int i = 0; i < idx.Length; i++)
+            {
+                info.objidx[i] = idx[i];
+            }
+
+            objInfo.Add(info);
+            clones.Add(a);
+            Debug.Log(" info : " + type + " " + a.name + " " + info.objidx[2] + "층");
+            idx[2] = 0;
         }
 
     }
 
-    void OnClickCreate(ObjInfo info) {
+    void OnClickCreate(ObjInfo info)
+    {
         OnClickCreate(info.objidx, info.pos, info.rot, info.scale);
     }
 
@@ -385,24 +409,30 @@ public class BdEditor : Editor
         isOnOff = bd.isOnOff = null;
     }
 
-    void ExportData() {
+    void ExportData()
+    {
+        for (int i = 0; i < objInfo.Count; i++)
+        {
+            objInfo[i].pos = clones[i].transform.localPosition;
+            objInfo[i].rot = clones[i].transform.localEulerAngles;
+            objInfo[i].scale = clones[i].transform.localScale;
+        }
         // UserData> Data > ObjInfo 순
         ObjectData obj = new ObjectData();
-        obj.info = objInfo;
-
         // ObjectData  형식을 제이슨을 통해 스트링으로변환
+        obj.info = objInfo;
         string json = JsonUtility.ToJson(obj, true);
         Debug.Log(json);
 
         // 컴퓨터에 빈 텍스트 파일 생성 
         FileStream file = new FileStream(Application.dataPath + "/Star/Editor/Building_data.text", FileMode.Create);
-       // 제이슨 데이터를 텍스트로 전환
+        // 제이슨 데이터를 텍스트로 전환
         byte[] byteData = Encoding.UTF8.GetBytes(json);
         // 파일 덮어쓰기
         file.Write(byteData, 0, byteData.Length);
         // 닫아주기!!!
         file.Close();
-    
+
     }
 
     void ImportData()
@@ -432,7 +462,8 @@ public class BdEditor : Editor
     }
 
     //유저1번 2번 3번.. 으로 데이터 추가해 파일 뽑으려 만든 함수.. 수정필요
-    void FinalData(ObjectData data) {
+    void FinalData(ObjectData data)
+    {
         // 매개변수 다시 설정하기
         objdata.Add(data);
         UserData obj = new UserData();
@@ -445,11 +476,12 @@ public class BdEditor : Editor
     }
 
     // 유저123.... 모든 유저 정보데이터 없에주기
-    void AllDataReset() {
+    void AllDataReset()
+    {
         objdata.Clear();
         OnClickDelete();
     }
-    
 
- }
+
+}
 
