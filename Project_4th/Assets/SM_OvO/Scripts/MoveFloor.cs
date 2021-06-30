@@ -124,6 +124,16 @@ public class MoveFloor : MonoBehaviour
 
     public void OnClick_FloorReset()
     {
+
+        //1,2,3층을 다시 활성화시킨다.
+        firstBlock.gameObject.SetActive(true);
+        secondBlock.gameObject.SetActive(true);
+        thirdBlock.gameObject.SetActive(true);
+        
+        
+        //1,2,3층의 위치를 초기화시켜준다.
+
+
         Transform tr_f = GameObject.Find("1").transform;
         Transform tr_s = GameObject.Find("2").transform;
         Transform tr_t = GameObject.Find("3").transform;
