@@ -1,0 +1,7 @@
+{
+    "age": 0,
+    "height": 0,
+    "name": "",
+    "weight": 0,
+    "family": []
+}
