@@ -11,6 +11,12 @@ public class MenuController : MonoBehaviour
     GameObject MainMenu;
     GameObject EditMenu;
     GameObject FurnitureSlate;
+    GameObject EditScale;
+    GameObject FurnitureMenu;
+
+    int editMenuCnt = 0;
+    int editScaleCnt = 0;
+    int furnitureMenuCnt = 0;
 
     void Start()
 
@@ -19,9 +25,14 @@ public class MenuController : MonoBehaviour
         MainMenu = GameObject.Find("MainMenu");
         EditMenu = GameObject.Find("EditMenu");
         FurnitureSlate = GameObject.Find("FurnitureSlate");
+        EditScale = GameObject.Find("EditScale");
+        FurnitureMenu = GameObject.Find("FurnitureMenu");
+
         SubMenu.SetActive(false);
         EditMenu.SetActive(false);
+        EditScale.SetActive(false);
         FurnitureSlate.SetActive(false);
+        FurnitureMenu.SetActive(false);
     }
 
 
@@ -37,11 +48,51 @@ public class MenuController : MonoBehaviour
 
     public void OnClickEditMenu()
     {
+        //EditMenu 활성화
         EditMenu.SetActive(true);
-    }   
+        if(EditMenu.activeSelf == true)
+        {
+            editMenuCnt++;
+        }
+        if(editMenuCnt == 2)
+        {
+            EditMenu.SetActive(false);
+            editMenuCnt = 0;
+        }
+    }
+    
+    public void OnClickEditScale()
+    {
+        EditScale.SetActive(true);
+        if (EditScale.activeSelf == true)
+        {
+            editScaleCnt++;
+        }
+        if(editScaleCnt == 2)
+        {
+            EditScale.SetActive(false);
+            editScaleCnt = 0;
+        }
+    }
 
+    public void OnClickFurnitureMenu()
+    {
+        FurnitureMenu.SetActive(true);
+        if(FurnitureMenu.activeSelf == true)
+        {
+            furnitureMenuCnt++;
+        }
+        if(furnitureMenuCnt == 2)
+        {
+            FurnitureMenu.SetActive(false);
+            furnitureMenuCnt = 0;
+        }
+    }
+    
+    
     public void OnClickFurnitureSlate()
     {
+        //FurnitureSlate 활성화
         FurnitureSlate.SetActive(true);
     }
 
