@@ -10,9 +10,16 @@ public class MenuController : MonoBehaviour
     GameObject SubMenu;
     GameObject MainMenu;
     GameObject EditMenu;
-    GameObject FurnitureSlate;
     GameObject EditScale;
     GameObject FurnitureMenu;
+
+
+    GameObject Wall_Plate;
+    GameObject Furniture_Plate;
+    GameObject Product_Plate;
+
+    //쓰레기통
+    GameObject TrashBin;
 
     int editMenuCnt = 0;
     int editScaleCnt = 0;
@@ -24,18 +31,29 @@ public class MenuController : MonoBehaviour
         SubMenu = GameObject.Find("SubMenu");
         MainMenu = GameObject.Find("MainMenu");
         EditMenu = GameObject.Find("EditMenu");
-        FurnitureSlate = GameObject.Find("FurnitureSlate");
         EditScale = GameObject.Find("EditScale");
         FurnitureMenu = GameObject.Find("FurnitureMenu");
+
+        //가구 프리팹 관련 메뉴 설정
+
+        Wall_Plate = GameObject.Find("Wall_Plate");
+        Furniture_Plate = GameObject.Find("Furniture_Plate");
+        Product_Plate = GameObject.Find("Product_Plate");
+
+        //쓰레기통
+        TrashBin = GameObject.Find("Collision_TrashBin");
+
 
         SubMenu.SetActive(false);
         EditMenu.SetActive(false);
         EditScale.SetActive(false);
-        FurnitureSlate.SetActive(false);
         FurnitureMenu.SetActive(false);
+        Wall_Plate.SetActive(false);
+        Furniture_Plate.SetActive(false);
+        Product_Plate.SetActive(false);
+        TrashBin.SetActive(false);
+
     }
-
-
 
 
     public void OnClickMainMenu()
@@ -50,17 +68,17 @@ public class MenuController : MonoBehaviour
     {
         //EditMenu 활성화
         EditMenu.SetActive(true);
-        if(EditMenu.activeSelf == true)
+        if (EditMenu.activeSelf == true)
         {
             editMenuCnt++;
         }
-        if(editMenuCnt == 2)
+        if (editMenuCnt == 2)
         {
             EditMenu.SetActive(false);
             editMenuCnt = 0;
         }
     }
-    
+
     public void OnClickEditScale()
     {
         EditScale.SetActive(true);
@@ -68,7 +86,7 @@ public class MenuController : MonoBehaviour
         {
             editScaleCnt++;
         }
-        if(editScaleCnt == 2)
+        if (editScaleCnt == 2)
         {
             EditScale.SetActive(false);
             editScaleCnt = 0;
@@ -78,22 +96,49 @@ public class MenuController : MonoBehaviour
     public void OnClickFurnitureMenu()
     {
         FurnitureMenu.SetActive(true);
-        if(FurnitureMenu.activeSelf == true)
+        if (FurnitureMenu.activeSelf == true)
         {
             furnitureMenuCnt++;
         }
-        if(furnitureMenuCnt == 2)
+        if (furnitureMenuCnt == 2)
         {
             FurnitureMenu.SetActive(false);
             furnitureMenuCnt = 0;
         }
     }
-    
-    
-    public void OnClickFurnitureSlate()
+
+    //가구 프리팹에 대한 3가지 메뉴
+    public void OnClickWall_PlateMenu()
     {
-        //FurnitureSlate 활성화
-        FurnitureSlate.SetActive(true);
+        Wall_Plate.SetActive(true);
+    }
+    public void OnClickFurniture_PlateMenu()
+    {
+        Furniture_Plate.SetActive(true);
+    }
+    public void OnClickProduct_PlateMenu()
+    {
+        Product_Plate.SetActive(true);
+    }
+    //가구 프리팹 메뉴 모두 비활성화
+    public void OnClickAll_PlateClose()
+    {
+        Wall_Plate.SetActive(false);
+        Furniture_Plate.SetActive(false);
+        Product_Plate.SetActive(false);
     }
 
+
+
+
+}
+
+
+public class CreateFurniture
+{
+    //여기서는 가구 프리팹 만드는 함수 만들고 버튼에 적용한다.
+    public void OnClickCreateCurtain()
+    {
+        
+    }
 }
