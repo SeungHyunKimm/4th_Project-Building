@@ -8,7 +8,7 @@ using System.Text;
 [Serializable]
 public class ObjInfo2
 {
-    //타입 / 모델
+    //타입 / 모델 / 층
     public int[] objidx = new int[3];
     public Vector3 pos; // localposition
     public Vector3 rot; // eularangle 사용할 것
@@ -52,7 +52,7 @@ public class Base : MonoBehaviour
 
     public void OnClickImportData() {
 
-        string path = Application.dataPath + "/Star/Editor/Building_data.text";
+        string path = Application.dataPath + "/Star/Editor/Building_data.json";
         //파일 있니?
         if (!File.Exists(path)) return;
 
@@ -90,7 +90,7 @@ public class Base : MonoBehaviour
         Debug.Log(json);
 
         // 컴퓨터에 빈 텍스트 파일 생성 
-        FileStream file = new FileStream(Application.dataPath + "/Star/Editor/Building_data.text", FileMode.Create);
+        FileStream file = new FileStream(Application.dataPath + "/Star/Editor/Building_data_holo.json", FileMode.Create);
         // 제이슨 데이터를 텍스트로 전환
         byte[] byteData = Encoding.UTF8.GetBytes(json);
         // 파일 덮어쓰기
@@ -100,7 +100,7 @@ public class Base : MonoBehaviour
     }
 
 
-    void OnClickCreate(int[] idx, Vector3 pos, Vector3 rot, Vector3 scale)
+    public void OnClickCreate(int[] idx, Vector3 pos, Vector3 rot, Vector3 scale)
     {
 
         GameObject[] obj = walls;
@@ -149,6 +149,12 @@ public class Base : MonoBehaviour
       void OnClickCreate(ObjInfo2 info)
     {
         OnClickCreate(info.objidx, info.pos, info.rot, info.scale);
+    }  
+    
+   public  void OnClickButton()
+    {
+        int[] idx = { 0, 0, 2 };
+        OnClickCreate(idx, Vector3.one *.1f, Vector3.zero, Vector3.one);
     }
 
     void OnClickDestroy()
