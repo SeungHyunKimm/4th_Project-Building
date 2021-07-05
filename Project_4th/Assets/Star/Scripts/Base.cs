@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using System.Text;
+using Microsoft.MixedReality.Toolkit.UI;
 
 [Serializable]
 public class ObjInfo2
@@ -164,4 +165,36 @@ public class Base : MonoBehaviour
         clones.Remove(a);
         Destroy(a);
     }
+
+
+    //층 오브젝트 자식 중 XYZ레이어면 objmani_star.cs에서 Scale_x로 바꾼다.. 
+    public void OnClickScaleXTotal()
+    {
+        for (int i = 0; i < floor.Length; i++)
+        {
+            //~층이 활성화인 경우
+            if (floor[i].activeSelf)
+            {
+                // 자식 수만큼 실행
+                for (int j = 0; j < floor[i].transform.childCount; j++)
+                {
+                    //자식의 레이어가 xyz면
+                    GameObject child = floor[i].transform.GetChild(j).gameObject;
+                    if (child.layer == LayerMask.NameToLayer("XYZ"))
+                    {
+                        //scale_x로 바꾼다.
+                        ObjectManipulator_Star objstar = transform.GetChild(j).GetComponent<ObjectManipulator_Star>();
+                        objstar.OnClickScaleX();
+                    }
+
+
+                }
+
+            }
+
+        }
+
+    }
+
+
 }
