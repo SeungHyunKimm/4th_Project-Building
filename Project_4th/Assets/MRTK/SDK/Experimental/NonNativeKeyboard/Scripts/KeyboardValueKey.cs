@@ -1,10 +1,11 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See LICENSE in the project root for license information.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace HoloToolkit.UI.Keyboard
+namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 {
     /// <summary>
     /// Represents a key on the keyboard that has a string value for input.
@@ -15,6 +16,7 @@ namespace HoloToolkit.UI.Keyboard
         /// <summary>
         /// The default string value for this key.
         /// </summary>
+        [Experimental]
         public string Value;
 
         /// <summary>
@@ -25,10 +27,10 @@ namespace HoloToolkit.UI.Keyboard
         /// <summary>
         /// Reference to child text element.
         /// </summary>
-        private Text m_Text;
+        private TextMeshProUGUI m_Text;
 
         /// <summary>
-        /// Reference to the GameObject's Button component.
+        /// Reference to the GameObject's button component.
         /// </summary>
         private Button m_Button;
 
@@ -45,13 +47,13 @@ namespace HoloToolkit.UI.Keyboard
         /// </summary>
         private void Start()
         {
-            m_Text = gameObject.GetComponentInChildren<Text>();
+            m_Text = gameObject.GetComponentInChildren<TextMeshProUGUI>();
             m_Text.text = Value;
 
             m_Button.onClick.RemoveAllListeners();
             m_Button.onClick.AddListener(FireAppendValue);
 
-            Keyboard.Instance.OnKeyboardShifted += Shift;
+            NonNativeKeyboard.Instance.OnKeyboardShifted += Shift;
         }
 
         /// <summary>
@@ -59,13 +61,13 @@ namespace HoloToolkit.UI.Keyboard
         /// </summary>
         private void FireAppendValue()
         {
-            Keyboard.Instance.AppendValue(this);
+            NonNativeKeyboard.Instance.AppendValue(this);
         }
 
         /// <summary>
         /// Called by the Keyboard when the shift key is pressed. Updates the text for this key using the Value and ShiftValue fields.
         /// </summary>
-        /// <param name="isShifted"></param>
+        /// <param name="isShifted">Indicates the state of shift, the key needs to be changed to.</param>
         public void Shift(bool isShifted)
         {
             // Shift value should only be applied if a shift value is present.

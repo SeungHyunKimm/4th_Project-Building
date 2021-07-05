@@ -1,9 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See LICENSE in the project root for license information.
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
 using UnityEngine;
 
-namespace HoloToolkit.UI.Keyboard
+namespace Microsoft.MixedReality.Toolkit.Experimental.UI
 {
     /// <summary>
     /// Axis slider is a script to lock a bar across a specific axis.
@@ -18,6 +18,7 @@ namespace HoloToolkit.UI.Keyboard
             Z
         }
 
+        [Experimental]
         public EAxis Axis = EAxis.X;
 
         private float currentPos;
