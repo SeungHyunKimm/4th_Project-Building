@@ -7,18 +7,21 @@ public class MenuController : MonoBehaviour
 {
     //메인메뉴를 클릭하게 되면
     //자기자신(MainMenu)는 없어지고 SubMenu 8가지가 나타나게 된다.
-
     GameObject SubMenu;
     GameObject MainMenu;
     GameObject EditMenu;
     GameObject FurnitureSlate;
 
-    private void Start()
+    void Start()
+
     {
-        SubMenu = GameObject.Find("MainMenu");
-        MainMenu = GameObject.Find("SubMenu");
+        SubMenu = GameObject.Find("SubMenu");
+        MainMenu = GameObject.Find("MainMenu");
         EditMenu = GameObject.Find("EditMenu");
         FurnitureSlate = GameObject.Find("FurnitureSlate");
+        SubMenu.SetActive(false);
+        EditMenu.SetActive(false);
+        FurnitureSlate.SetActive(false);
     }
 
 
