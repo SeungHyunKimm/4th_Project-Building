@@ -758,6 +758,8 @@ GameObject:
   - component: {fileID: 5534996774373994950}
   - component: {fileID: 5834664217318572418}
   - component: {fileID: 2298875102874194929}
+  - component: {fileID: 6574262601824877206}
+  - component: {fileID: 9056400091608622560}
   m_Layer: 0
   m_Name: ToiletPaperS
   m_TagString: Untagged
@@ -837,7 +839,8 @@ MonoBehaviour:
   rotateLerpTime: 0.001
   scaleLerpTime: 0.001
   enableConstraints: 1
-  constraintsManager: {fileID: 0}
+  constraintsManager: {fileID: -139994698488352095, guid: d0d1360756750d14fa172d8bba4cae69,
+    type: 3}
   elasticsManager: {fileID: 0}
   onManipulationStarted:
     m_PersistentCalls:
@@ -864,3 +867,57 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.20344645, y: 0.72749496, z: 0.27331966}
   m_Center: {x: 0.0000000037252903, y: 0.3388847, z: 0.02096197}
+--- !u!114 &6574262601824877206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900989967695003900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193c362eb02741c43b31788b51c83d73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focusEnabled: 1
+  prefab: {fileID: 1083549605185280, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
+  tooltipToggleAction:
+    id: 0
+    description: None
+    axisConstraint: 0
+  appearType: 0
+  vanishType: 0
+  remainType: 0
+  appearDelay: 0
+  vanishDelay: 2
+  lifetime: 1
+  keepWorldRotation: 1
+  settingsMode: 1
+  showBackground: 1
+  showOutline: 0
+  showConnector: 1
+  followType: 1
+  pivotMode: 0
+  pivotDirection: 1
+  pivotDirectionOrient: 0
+  manualPivotDirection: {x: 0, y: 1, z: 0}
+  manualPivotLocalPosition: {x: 0, y: 0.5, z: -0.2}
+  pivotDistance: 0.25
+  toolTipText: Bathroom Paper Holder $7
+  anchor: {fileID: 0}
+--- !u!54 &9056400091608622560
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900989967695003900}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

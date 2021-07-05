@@ -171,6 +171,8 @@ GameObject:
   - component: {fileID: 209650161158312054}
   - component: {fileID: 7134742731143477556}
   - component: {fileID: -1948180045515485258}
+  - component: {fileID: -6607749919509590817}
+  - component: {fileID: 961752750930199016}
   m_Layer: 0
   m_Name: 4.SofaS
   m_TagString: Untagged
@@ -251,7 +253,8 @@ MonoBehaviour:
   rotateLerpTime: 0.001
   scaleLerpTime: 0.001
   enableConstraints: 1
-  constraintsManager: {fileID: 0}
+  constraintsManager: {fileID: -1268295539173673584, guid: 0b6c7ec51c1d9574a85deb814efb71f8,
+    type: 3}
   elasticsManager: {fileID: 0}
   onManipulationStarted:
     m_PersistentCalls:
@@ -278,3 +281,57 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.4882127, y: 0.5280925, z: 2.229619}
   m_Center: {x: -0.003323257, y: 0.23595375, z: -0.043202877}
+--- !u!54 &-6607749919509590817
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9154819715752144082}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &961752750930199016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9154819715752144082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193c362eb02741c43b31788b51c83d73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focusEnabled: 1
+  prefab: {fileID: 1083549605185280, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
+  tooltipToggleAction:
+    id: 0
+    description: None
+    axisConstraint: 0
+  appearType: 0
+  vanishType: 0
+  remainType: 0
+  appearDelay: 0
+  vanishDelay: 2
+  lifetime: 1
+  keepWorldRotation: 1
+  settingsMode: 1
+  showBackground: 1
+  showOutline: 0
+  showConnector: 1
+  followType: 1
+  pivotMode: 0
+  pivotDirection: 1
+  pivotDirectionOrient: 0
+  manualPivotDirection: {x: 0, y: 1, z: 0}
+  manualPivotLocalPosition: {x: 0.2, y: 0.7, z: 0}
+  pivotDistance: 0.25
+  toolTipText: Simple Sofa $60
+  anchor: {fileID: 0}

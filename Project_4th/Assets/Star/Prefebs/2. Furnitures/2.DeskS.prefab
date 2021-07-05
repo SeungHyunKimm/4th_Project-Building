@@ -112,6 +112,8 @@ GameObject:
   - component: {fileID: 410279623341833016}
   - component: {fileID: -8776075484876818161}
   - component: {fileID: -1846691568316307653}
+  - component: {fileID: 5930056289526868583}
+  - component: {fileID: -1963292984286250148}
   m_Layer: 0
   m_Name: 2.DeskS
   m_TagString: Untagged
@@ -191,7 +193,8 @@ MonoBehaviour:
   rotateLerpTime: 0.001
   scaleLerpTime: 0.001
   enableConstraints: 1
-  constraintsManager: {fileID: 0}
+  constraintsManager: {fileID: -1268295539173673584, guid: 0b6c7ec51c1d9574a85deb814efb71f8,
+    type: 3}
   elasticsManager: {fileID: 0}
   onManipulationStarted:
     m_PersistentCalls:
@@ -218,3 +221,57 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2661343, y: 0.45207715, z: 0.5538342}
   m_Center: {x: 0, y: 0.21134198, z: 0.003913641}
+--- !u!54 &5930056289526868583
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4022596069039001858}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &-1963292984286250148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4022596069039001858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193c362eb02741c43b31788b51c83d73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focusEnabled: 1
+  prefab: {fileID: 1083549605185280, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
+  tooltipToggleAction:
+    id: 0
+    description: None
+    axisConstraint: 0
+  appearType: 0
+  vanishType: 0
+  remainType: 0
+  appearDelay: 0
+  vanishDelay: 2
+  lifetime: 1
+  keepWorldRotation: 1
+  settingsMode: 1
+  showBackground: 1
+  showOutline: 0
+  showConnector: 1
+  followType: 1
+  pivotMode: 0
+  pivotDirection: 1
+  pivotDirectionOrient: 0
+  manualPivotDirection: {x: 0, y: 1, z: 0}
+  manualPivotLocalPosition: {x: 0.2, y: 0.7, z: 0}
+  pivotDistance: 0.25
+  toolTipText: Light-Weight Desk $50
+  anchor: {fileID: 0}

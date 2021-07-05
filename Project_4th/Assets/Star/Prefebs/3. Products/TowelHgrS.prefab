@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -3588651944633984479}
   - component: {fileID: 6558514089653428188}
   - component: {fileID: -5609467971596911626}
+  - component: {fileID: -6644616906943243331}
   m_Layer: 0
   m_Name: TowelHgrS
   m_TagString: Untagged
@@ -119,6 +120,44 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.15214832, y: 0.68308437, z: 0.23857969}
   m_Center: {x: 0.016463185, y: 0.3313207, z: 0.00205791}
+--- !u!114 &-6644616906943243331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4630850159245965005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193c362eb02741c43b31788b51c83d73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focusEnabled: 1
+  prefab: {fileID: 1083549605185280, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
+  tooltipToggleAction:
+    id: 0
+    description: None
+    axisConstraint: 0
+  appearType: 0
+  vanishType: 0
+  remainType: 0
+  appearDelay: 0
+  vanishDelay: 2
+  lifetime: 1
+  keepWorldRotation: 1
+  settingsMode: 1
+  showBackground: 1
+  showOutline: 0
+  showConnector: 1
+  followType: 1
+  pivotMode: 0
+  pivotDirection: 1
+  pivotDirectionOrient: 0
+  manualPivotDirection: {x: 0, y: 1, z: 0}
+  manualPivotLocalPosition: {x: 0.2, y: 0.5, z: 0}
+  pivotDistance: 0.25
+  toolTipText: Towel Hanger $22
+  anchor: {fileID: 0}
 --- !u!1 &5695274641657158450
 GameObject:
   m_ObjectHideFlags: 0

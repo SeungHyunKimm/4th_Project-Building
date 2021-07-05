@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -793688903770992317}
   - component: {fileID: 9169954115798918858}
   - component: {fileID: 5910014100882257841}
+  - component: {fileID: -8744597690546085161}
   m_Layer: 0
   m_Name: ToiletCabinetS
   m_TagString: Untagged
@@ -133,6 +134,44 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.3062057, y: 0.07127023, z: 0.8237982}
   m_Center: {x: -0.0018354058, y: -0.3762641, z: 0.014683485}
+--- !u!114 &-8744597690546085161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3767726073181620846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193c362eb02741c43b31788b51c83d73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focusEnabled: 1
+  prefab: {fileID: 1083549605185280, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
+  tooltipToggleAction:
+    id: 0
+    description: None
+    axisConstraint: 0
+  appearType: 0
+  vanishType: 0
+  remainType: 0
+  appearDelay: 0
+  vanishDelay: 2
+  lifetime: 1
+  keepWorldRotation: 1
+  settingsMode: 1
+  showBackground: 1
+  showOutline: 0
+  showConnector: 1
+  followType: 1
+  pivotMode: 0
+  pivotDirection: 1
+  pivotDirectionOrient: 0
+  manualPivotDirection: {x: 0, y: 1, z: 0}
+  manualPivotLocalPosition: {x: 0.3, y: 0.4, z: 0}
+  pivotDistance: 0.25
+  toolTipText: Gray Wall Cabinet $79
+  anchor: {fileID: 0}
 --- !u!1 &4252556199398867785
 GameObject:
   m_ObjectHideFlags: 0
