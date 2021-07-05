@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 181cd563a8349c34ea8978b0bc8d9c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hostTransform: {fileID: 0}
+  hostTransform: {fileID: 2837758259281821773}
   manipulationType: 3
   twoHandedManipulationType: 7
   allowFarManipulation: 1
@@ -172,7 +172,7 @@ MonoBehaviour:
   rotateLerpTime: 0.001
   scaleLerpTime: 0.001
   enableConstraints: 1
-  constraintsManager: {fileID: 0}
+  constraintsManager: {fileID: 7327577283129740320}
   elasticsManager: {fileID: 0}
   onManipulationStarted:
     m_PersistentCalls:
