@@ -1,10 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Microsoft.MixedReality.Toolkit.Experimental.UI
+namespace HoloToolkit.UI.Keyboard
 {
     /// <summary>
     /// This component represents and ordered collection of UI elements. You
@@ -16,7 +16,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
     /// To use this component attach it to a UI element (a GameObject with a
     /// RectTransform component) such as an Image or Panel.
     /// </summary>
-    [AddComponentMenu("Scripts/MRTK/Experimental/UICollection")]
+    [AddComponentMenu("UI/HoloUIKit/UICollection")]
     [RequireComponent(typeof(RectTransform))]
     [ExecuteInEditMode]
     public class UICollection : MonoBehaviour
@@ -25,46 +25,24 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         /// The maximum width that the collection should expand to. If the value is -1.0 then it will use
         /// the width specified by the RectTransform of this component's GameObject.
         /// </summary>
-        [Experimental]
-        [SerializeField] private float maxWidth = -1.0f;
-
-        public float MaxWidth
-        {
-            get => maxWidth;
-            set => maxWidth = value;
-        }
+        public float MaxWidth = -1.0f;
 
         /// <summary>
         /// The maximum height that the collection should expand to. If the value is -1.0 then it will use
         /// the height specified by the RectTransform of this component's GameObject.
         /// </summary>
-        [SerializeField] private float maxHeight = -1.0f;
+        public float MaxHeight = -1.0f;
 
-        public float MaxHeight
-        {
-            get => maxHeight;
-            set => maxHeight = value;
-        }
         /// <summary>
         /// The amount of horizontal spacing (in pixels) to use between items in this collection.
         /// </summary>
-        [SerializeField] private float horizontalSpacing = 0.0f;
+        public float HorizontalSpacing = 0.0f;
 
-        public float HorizontalSpacing
-        {
-            get => horizontalSpacing;
-            set => horizontalSpacing = value;
-        }
         /// <summary>
         /// The amount of vertical spacing (in pixels) to use between items in this collection.
         /// </summary>
-        [SerializeField] private float verticalSpacing = 0.0f;
+        public float VerticalSpacing = 0.0f;
 
-        public float VerticalSpacing
-        {
-            get => verticalSpacing;
-            set => verticalSpacing = value;
-        }
         /// <summary>
         /// A list of items in this collection. This list should not be modified directly. Instead
         /// use AddItem(RectTransform) and RemoveItem(RectTransform).
@@ -86,8 +64,6 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         {
             // Verify this is attached to a GameObject with a rect transform
             rectTransform = GetComponent<RectTransform>();
-
-            if (!Application.isEditor) { return; }
 
             // Collect children items already added (likely added in the Editor)
             CollectItems();
@@ -163,7 +139,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             Rect rect = rectTransform.rect;
 
             Vector2 updatedSize = Vector2.zero;
-            if (maxWidth < 0.0f)
+            if (MaxWidth < 0.0f)
             {
                 // Set to the width of the panel
                 updatedSize.x = rect.width;
@@ -171,10 +147,10 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             else
             {
                 // Set to the max width
-                updatedSize.x = maxWidth;
+                updatedSize.x = MaxWidth;
             }
 
-            if (maxHeight < 0.0f)
+            if (MaxHeight < 0.0f)
             {
                 // Set to the height of the panel
                 updatedSize.y = rect.height;
@@ -182,7 +158,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             else
             {
                 // Set to the max height
-                updatedSize.y = maxHeight;
+                updatedSize.y = MaxHeight;
             }
 
             Vector2 currentOffset = Vector2.zero;
@@ -204,7 +180,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 if (Items[i].rect.width + currentOffset.x > updatedSize.x)
                 {
                     // Move to next column
-                    currentOffset.y += columnHeight + verticalSpacing;
+                    currentOffset.y += columnHeight + VerticalSpacing;
                     currentOffset.x = 0.0f;
                     columnHeight = Items[i].rect.height;
 
@@ -220,14 +196,14 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 Items[i].anchoredPosition = new Vector2(currentOffset.x, -currentOffset.y);
 
                 // Update current offset
-                currentOffset.x += Items[i].rect.width + horizontalSpacing;
+                currentOffset.x += Items[i].rect.width + HorizontalSpacing;
 
-                maxPanelWidth = Mathf.Max(currentOffset.x - horizontalSpacing, maxPanelWidth);
+                maxPanelWidth = Mathf.Max(currentOffset.x - HorizontalSpacing, maxPanelWidth);
             }
 
             // Update the panel size
-            float finalWidth = maxWidth < 0.0f ? rect.width : maxPanelWidth;
-            float finalHeight = maxHeight < 0.0f ? rect.height : columnHeight + currentOffset.y;
+            float finalWidth = MaxWidth < 0.0f ? rect.width : maxPanelWidth;
+            float finalHeight = MaxHeight < 0.0f ? rect.height : columnHeight + currentOffset.y;
             rectTransform.sizeDelta = new Vector2(finalWidth, finalHeight);
         }
     }

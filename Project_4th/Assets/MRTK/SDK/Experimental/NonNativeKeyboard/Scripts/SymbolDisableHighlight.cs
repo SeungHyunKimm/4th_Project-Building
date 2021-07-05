@@ -1,20 +1,16 @@
-﻿// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Microsoft.MixedReality.Toolkit.Experimental.UI
+namespace HoloToolkit.UI.Keyboard
 {
-    /// <summary>
-    /// Updates the visual state of the text based on the buttons state
-    /// </summary>
     public class SymbolDisableHighlight : MonoBehaviour
     {
         /// <summary>
         /// The text field to update.
         /// </summary>
-        [Experimental]
         [SerializeField]
         private Text m_TextField = null;
 
@@ -47,7 +43,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         {
             if (m_TextField != null)
             {
-                m_StartingColor = m_TextField.color;
+	            m_StartingColor = m_TextField.color;
             }
 
             if (m_ImageField != null)
@@ -75,7 +71,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         {
             if (m_TextField != null && m_Button != null)
             {
-                m_TextField.color = m_Button.interactable ? m_StartingColor : m_DisabledColor;
+	            m_TextField.color = m_Button.interactable ? m_StartingColor : m_DisabledColor;
             }
 
             if (m_ImageField != null && m_Button != null)
@@ -83,5 +79,5 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
                 m_ImageField.color = m_Button.interactable ? m_StartingColor : m_DisabledColor;
             }
         }
-    }
+	}
 }
