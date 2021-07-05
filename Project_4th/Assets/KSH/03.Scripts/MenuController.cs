@@ -11,6 +11,8 @@ public class MenuController : MonoBehaviour
     public GameObject SubMenu;
     public GameObject MainMenu;
     public GameObject EditMenu;
+    public GameObject FurnitureSlate;
+
    
     public void OnClickMainMenu()
     {
@@ -24,5 +26,10 @@ public class MenuController : MonoBehaviour
     {
         EditMenu.SetActive(true);
     }   
+
+    public void OnClickFurnitureSlate()
+    {
+        FurnitureSlate.SetActive(true);
+    }
 
 }
