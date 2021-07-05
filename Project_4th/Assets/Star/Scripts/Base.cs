@@ -4,6 +4,8 @@ using UnityEngine;
 using System;
 using System.IO;
 using System.Text;
+using Microsoft.MixedReality.Toolkit.UI;
+using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 
 [Serializable]
 public class ObjInfo2
@@ -151,17 +153,70 @@ public class Base : MonoBehaviour
         OnClickCreate(info.objidx, info.pos, info.rot, info.scale);
     }  
     
+    // 아이템 버튼 눌러 생성하기
+    // 인덱스 값이 변해야 한다
    public  void OnClickButton()
     {
         int[] idx = { 0, 0, 2 };
         OnClickCreate(idx, Vector3.one *.1f, Vector3.zero, Vector3.one);
     }
 
-    void OnClickDestroy()
+    // 아이템 없에는 함수
+    // 내가 어떤걸 집었는지 알 수 없어 매개변수로 담게 만듬
+    void OnClickDestroy(GameObject a)
     {
-        GameObject a = new GameObject(); // 레이로 집어서 쓰레기통에 버린다. How?? 고민하자
+        // 레이로 집어서 쓰레기통에 버린다. How?? 고민하자
         objInfo.RemoveAt(clones.IndexOf(a));
         clones.Remove(a);
         Destroy(a);
     }
+
+
+    //층 오브젝트 자식 중 XYZ레이어면 objmani_star.cs에서 Scale_x로 바꾼다.. 
+    public void OnClickScaleXTotal()
+    {
+        for (int i = 0; i < floor.Length; i++)
+        {
+            //~층이 활성화인 경우
+            if (floor[i].activeSelf)
+            {
+                // 자식 수만큼 실행
+                for (int j = 0; j < floor[i].transform.childCount; j++)
+                {
+                    //자식의 레이어가 xyz면
+                    GameObject child = floor[i].transform.GetChild(j).gameObject;
+                    if (child.layer == LayerMask.NameToLayer("XYZ"))
+                    {
+                        //scale_x로 바꾼다.
+                        ObjectManipulator_Star objstar = transform.GetChild(j).GetComponent<ObjectManipulator_Star>();
+                        objstar.OnClickScaleX();
+                    }
+
+
+                }
+
+            }
+
+        }
+
+    }
+    
+    //미니어쳐 함수
+    //송도 작은 구역과 함께 나타나게 수정하기
+    public void OnClickMini(Transform player) {
+        
+       // 건물 본체 복사
+        Transform mini = Instantiate(gameObject).transform;
+        mini.GetComponent<Base>().enabled = false ;
+        // 바운드 컨트롤로 움직이게 하자
+        mini.GetComponent<BoundsControl>().enabled = true;
+        mini.GetComponent<ObjectManipulator>().enabled = true;
+        // 미니어쳐라 10분의 1크기
+        mini.localScale = Vector3.one * .1f;
+        // 포톤 접속 시 플레이어 찾을 수 없어 매개변수로 받아 실행하자.
+        // 플레이어 스크립트에서 base.cs 받아와서 버튼으로 처리하기
+        mini.position = player.position + Vector3.forward * .1f;
+
+    }
+
 }

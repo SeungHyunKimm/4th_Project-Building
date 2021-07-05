@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6530336550503777474}
   - component: {fileID: -1098572853621166639}
   - component: {fileID: 752961137376640687}
+  - component: {fileID: 8065014169661331407}
   m_Layer: 0
   m_Name: 1.Curtain1S
   m_TagString: Untagged
@@ -119,6 +120,44 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.65558136, y: 2.1095207, z: 0.121732146}
   m_Center: {x: 0.008610487, y: 0.041856885, z: 0.01722093}
+--- !u!114 &8065014169661331407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2402953434045647352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193c362eb02741c43b31788b51c83d73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focusEnabled: 1
+  prefab: {fileID: 1083549605185280, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
+  tooltipToggleAction:
+    id: 0
+    description: None
+    axisConstraint: 0
+  appearType: 0
+  vanishType: 0
+  remainType: 0
+  appearDelay: 0
+  vanishDelay: 2
+  lifetime: 1
+  keepWorldRotation: 1
+  settingsMode: 1
+  showBackground: 1
+  showOutline: 0
+  showConnector: 1
+  followType: 1
+  pivotMode: 0
+  pivotDirection: 1
+  pivotDirectionOrient: 0
+  manualPivotDirection: {x: 0, y: 1, z: 0}
+  manualPivotLocalPosition: {x: 0, y: 0.5, z: -0.2}
+  pivotDistance: 0.25
+  toolTipText: Brown Curtain $10
+  anchor: {fileID: 0}
 --- !u!1 &7718408991627132122
 GameObject:
   m_ObjectHideFlags: 0

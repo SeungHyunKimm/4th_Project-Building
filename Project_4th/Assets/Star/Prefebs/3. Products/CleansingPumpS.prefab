@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: -2377282361707405978}
   - component: {fileID: -639990065409517282}
   - component: {fileID: -1353996043595889191}
+  - component: {fileID: -3530023174191899137}
   m_Layer: 0
   m_Name: CleansingPumpS
   m_TagString: Untagged
@@ -309,3 +310,41 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.09006423, y: 0.15230155, z: 0.11174838}
   m_Center: {x: 0.0020966828, y: 0.023191929, z: 0.0014574304}
+--- !u!114 &-3530023174191899137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7385291024080664824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193c362eb02741c43b31788b51c83d73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focusEnabled: 1
+  prefab: {fileID: 1083549605185280, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
+  tooltipToggleAction:
+    id: 0
+    description: None
+    axisConstraint: 0
+  appearType: 0
+  vanishType: 0
+  remainType: 0
+  appearDelay: 0
+  vanishDelay: 2
+  lifetime: 1
+  keepWorldRotation: 1
+  settingsMode: 1
+  showBackground: 1
+  showOutline: 0
+  showConnector: 1
+  followType: 1
+  pivotMode: 0
+  pivotDirection: 1
+  pivotDirectionOrient: 0
+  manualPivotDirection: {x: 0, y: 1, z: 0}
+  manualPivotLocalPosition: {x: -0.1, y: 0.3, z: 0}
+  pivotDistance: 0.25
+  toolTipText: Form Cleansing $3
+  anchor: {fileID: 0}
