@@ -10,6 +10,8 @@ public class OnCollision : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        print("충돌 감지 완료");
+
         bs = GameObject.Find("Base").GetComponent<Base>();
         bs.OnClickDestroy(collision.gameObject);
     }

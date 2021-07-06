@@ -24,6 +24,7 @@ public class MenuController : MonoBehaviour
     int editMenuCnt = 0;
     int editScaleCnt = 0;
     int furnitureMenuCnt = 0;
+    int trashbinCnt = 0;
 
     //가구 프리팹 배열
     GameObject[] Furniture_;
@@ -136,6 +137,20 @@ public class MenuController : MonoBehaviour
         Wall_Plate.SetActive(false);
         Furniture_Plate.SetActive(false);
         Product_Plate.SetActive(false);
+    }
+
+    public void TrashBinActivate()
+    {
+        TrashBin.SetActive(true);
+        if(TrashBin.activeSelf == true)
+        {
+            trashbinCnt++;
+        }
+        if(trashbinCnt == 2)
+        {
+            TrashBin.SetActive(false);
+            trashbinCnt = 0;
+        }
     }
 
 
