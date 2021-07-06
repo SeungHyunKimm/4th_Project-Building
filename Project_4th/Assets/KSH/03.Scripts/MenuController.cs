@@ -144,6 +144,7 @@ public class MenuController : MonoBehaviour
     {
         int[] idx = { 0, 0, 0 };
         idx[1] = a.transform.GetSiblingIndex();
+
         if (a.transform.root.name.Contains("Wall"))
         {
             idx[0] = 0;
@@ -155,6 +156,12 @@ public class MenuController : MonoBehaviour
         else
         {
             idx[0] = 2;
+        }
+        if(a.transform.parent.GetSiblingIndex() == 2)
+        {
+            Transform firstP = a.transform.parent.parent.GetChild(1);
+            int b = firstP.childCount;
+            idx[1] = a.transform.GetSiblingIndex()+b;
         }
 
         BS.OnClickCreate(idx, Vector3.one * 0.1f, Vector3.zero, Vector3.one);
