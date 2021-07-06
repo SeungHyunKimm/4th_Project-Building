@@ -25,6 +25,12 @@ public class MenuController : MonoBehaviour
     int editScaleCnt = 0;
     int furnitureMenuCnt = 0;
 
+    //가구 프리팹 배열
+    GameObject[] Furniture_;
+
+    //베이스스크립트
+    Base BS;
+
     void Start()
 
     {
@@ -52,6 +58,10 @@ public class MenuController : MonoBehaviour
         Furniture_Plate.SetActive(false);
         Product_Plate.SetActive(false);
         TrashBin.SetActive(false);
+
+
+        //가구 프리팹 배열 선언
+        BS = GameObject.Find("Base").GetComponent<Base>();
 
     }
 
@@ -130,15 +140,30 @@ public class MenuController : MonoBehaviour
 
 
 
-
-}
-
-
-public class CreateFurniture
-{
-    //여기서는 가구 프리팹 만드는 함수 만들고 버튼에 적용한다.
-    public void OnClickCreateCurtain()
+    public void OnClickMake(GameObject a)
     {
-        
+        int[] idx = { 0, 0, 0 };
+        idx[1] = a.transform.GetSiblingIndex();
+        if (a.transform.root.name.Contains("Wall"))
+        {
+            idx[0] = 0;
+        }
+        else if (a.transform.root.name.Contains("Furniture"))
+        {
+            idx[0] = 1;
+        }
+        else
+        {
+            idx[0] = 2;
+        }
+
+        BS.OnClickCreate(idx, Vector3.one * 0.1f, Vector3.zero, Vector3.one);
     }
+
+
+
+
+
 }
+
+

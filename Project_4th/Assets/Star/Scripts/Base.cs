@@ -163,7 +163,7 @@ public class Base : MonoBehaviour
 
     // 아이템 없에는 함수
     // 내가 어떤걸 집었는지 알 수 없어 매개변수로 담게 만듬
-    void OnClickDestroy(GameObject a)
+    public void OnClickDestroy(GameObject a)
     {
         // 레이로 집어서 쓰레기통에 버린다. How?? 고민하자
         objInfo.RemoveAt(clones.IndexOf(a));

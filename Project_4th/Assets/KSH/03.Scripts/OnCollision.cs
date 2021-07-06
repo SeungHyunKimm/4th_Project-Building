@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class OnCollision : MonoBehaviour
 {
+
+    Base bs;
+
+
     void OnCollisionEnter(Collision collision)
     {
-        //나와 부딪힌 놈을 파괴하자
-        Destroy(collision.gameObject);
+        bs = GameObject.Find("Base").GetComponent<Base>();
+        bs.OnClickDestroy(collision.gameObject);
     }
+
 }
