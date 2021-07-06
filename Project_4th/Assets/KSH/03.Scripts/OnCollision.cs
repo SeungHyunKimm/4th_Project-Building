@@ -8,12 +8,19 @@ public class OnCollision : MonoBehaviour
     Base bs;
 
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
         print("충돌 감지 완료");
-
+        if (other.transform.name == "Mini")
+        {
+            Destroy(other);
+        }
+        else { 
         bs = GameObject.Find("Base").GetComponent<Base>();
-        bs.OnClickDestroy(collision.gameObject);
+        bs.OnClickDestroy(other.gameObject);
+        }
+
     }
 
+    
 }
