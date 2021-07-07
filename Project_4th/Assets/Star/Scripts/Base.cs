@@ -160,7 +160,8 @@ public class Base : MonoBehaviour
         // 레이로 집어서 쓰레기통에 버린다. How?? 고민하자
         objInfo.RemoveAt(clones.IndexOf(a));
         clones.Remove(a);
-        Destroy(a);
+        a.SetActive(false);
+        //Destroy(a);
     }
 
     public void OnClickDelete() {
