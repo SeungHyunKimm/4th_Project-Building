@@ -6,6 +6,9 @@ using System.IO;
 using System.Text;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
+using Photon.Pun;
+using Photon.Realtime;
+
 
 [Serializable]
 public class ObjInfo2
@@ -22,7 +25,7 @@ public class ObjectData2
 {
     public List<ObjInfo2> info = new List<ObjInfo2>();
 }
-public class Base : MonoBehaviour
+public class Base : MonoBehaviourPunCallbacks
 {
     List<ObjInfo2> objInfo = new List<ObjInfo2>();
     List<GameObject> clones = new List<GameObject>();
@@ -35,10 +38,29 @@ public class Base : MonoBehaviour
     public GameObject[] furnitures;
     public GameObject[] products;
 
-
-
+    
     void Start()
     {
+        //포톤 뷰 붙는 프리펩들 포톤/리소스 폴더 안에 없어도 문제없게 하기
+        if (PhotonNetwork.PrefabPool is DefaultPool pool)
+        {
+            for (int i = 0; i < walls.Length; i++)
+            {
+            if (walls[i] != null) pool.ResourceCache.Add(walls[i].name, walls[i]);
+            }  
+            
+            for (int i = 0; i < furnitures.Length; i++)
+            {
+            if (furnitures[i] != null) pool.ResourceCache.Add(furnitures[i].name, furnitures[i]);
+            }  
+            
+            for (int i = 0; i < products.Length; i++)
+            {
+            if (products[i] != null) pool.ResourceCache.Add(products[i].name, products[i]);
+            }
+
+        }
+
         floor = new GameObject[transform.childCount];
         // 층별 Y값을 저장할 변수(x, z는 층마다 다를 수 있다.)
         floorY = new float[transform.childCount];
@@ -51,7 +73,7 @@ public class Base : MonoBehaviour
         }
     }
 
- 
+    
     public void OnClickImportData() {
 
         string path = Application.dataPath + "/Star/Editor/Building_data.json";
@@ -104,6 +126,7 @@ public class Base : MonoBehaviour
 
     public void OnClickCreate(int[] idx, Vector3 pos, Vector3 rot, Vector3 scale)
     {
+        if (!PhotonNetwork.IsMasterClient) return;
 
         GameObject[] obj = walls;
         string type = "Walls";
@@ -111,8 +134,11 @@ public class Base : MonoBehaviour
         if (idx[0] == 2) { obj = products; type = "Products"; }
 
         Transform parent = floor[idx[2]].transform;
-    
-        GameObject a = Instantiate(obj[idx[1]]);
+
+        //GameObject a = Instantiate(obj[idx[1]]);
+        //포톤뷰가 붙어있어 그냥 복제 불가능, 포톤네트워크 통해 복제하되 위치, 회전, 크기는 아래에서 조절할 것이므로 아무 값이나 넣자.
+        var a = PhotonNetwork.Instantiate(obj[idx[1]].name, Vector3.one * 1000, Quaternion.identity) ;
+            
 
         if (idx[2] == 0)
         {
@@ -271,9 +297,9 @@ public class Base : MonoBehaviour
         Transform mini = Instantiate(gameObject).transform;
         mini.name = "Mini";
         mini.GetComponent<Base>().enabled = false ;
-        // 바운드 컨트롤로 움직이게 하자
-        mini.GetComponent<BoundsControl>().enabled = true;
-        mini.GetComponent<ObjectManipulator>().enabled = true;
+        // 바운드 박스로 움직이게 하자
+        //BoundingBox bBox = 
+         mini.gameObject.AddComponent<BoundingBox>();
         // 미니어쳐라 10분의 1크기
         mini.localScale = Vector3.one * .1f;
         // 포톤 접속 시 플레이어 찾을 수 없어 매개변수로 받아 실행하자.

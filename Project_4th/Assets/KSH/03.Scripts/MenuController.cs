@@ -60,10 +60,20 @@ public class MenuController : MonoBehaviour
         Product_Plate.SetActive(false);
         TrashBin.SetActive(false);
 
+        StartCoroutine("FindBS");
 
+    }
+
+    IEnumerator FindBS() {
+
+        while (GameObject.FindWithTag("Base") == null )
+        {
+            yield return null;
+        }
         //가구 프리팹 배열 선언
-        BS = GameObject.Find("Base").GetComponent<Base>();
-
+        GameObject bs = GameObject.FindWithTag("Base");
+        print(bs.name);
+        BS = bs.GetComponent<Base>();
     }
 
     private void Update()
@@ -72,7 +82,6 @@ public class MenuController : MonoBehaviour
         {
             BS.OnClickImportData();
             TrashBinActivate();
-
         }
     }
     public void OnClickMainMenu()
