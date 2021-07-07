@@ -6,8 +6,6 @@ public class OnCollision : MonoBehaviour
 {
 
     Base bs;
-
-
     void OnCollisionEnter(Collision collision)
     {
         print("충돌 감지 완료");
