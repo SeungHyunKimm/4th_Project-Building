@@ -160,7 +160,11 @@ public class Base : MonoBehaviour
         // 레이로 집어서 쓰레기통에 버린다. How?? 고민하자
         objInfo.RemoveAt(clones.IndexOf(a));
         clones.Remove(a);
-        Destroy(a);
+
+        a.transform.position = Vector3.one * 1000;
+        a.SetActive(false);
+        //디스트로이하면 mrtk자체 오류남
+        //Destroy(a);
     }
 
     public void OnClickDelete() {

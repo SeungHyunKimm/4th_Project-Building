@@ -627,7 +627,7 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: Project4th1
   metroPackageVersion: 1.0.0.0
-  metroCertificatePath: C:\Users\FX516\Documents\GitHub\HLbuilding_1\Project_4th\Assets\WSATestCertificate.pfx
+  metroCertificatePath: Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: DefaultCompany
   metroCertificateIssuer: DefaultCompany

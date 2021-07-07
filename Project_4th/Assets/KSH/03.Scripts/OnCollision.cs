@@ -13,7 +13,9 @@ public class OnCollision : MonoBehaviour
         print("충돌 감지 완료");
         if (other.transform.name == "Mini")
         {
-            Destroy(other);
+            other.transform.position = Vector3.one * 1000;
+            other.gameObject.SetActive(false);
+            //Destroy(other);
         }
         else { 
         bs = GameObject.Find("Base").GetComponent<Base>();
