@@ -66,7 +66,15 @@ public class MenuController : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            BS.OnClickImportData();
+            TrashBinActivate();
 
+        }
+    }
     public void OnClickMainMenu()
     {
         //서브메뉴 8가지가 나타난다.
