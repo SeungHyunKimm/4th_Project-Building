@@ -15,7 +15,11 @@ GameObject:
   - component: {fileID: -8642561286321024031}
   - component: {fileID: -5300558546332792132}
   - component: {fileID: 4887179131129761039}
-  m_Layer: 0
+  - component: {fileID: 3479250640521252767}
+  - component: {fileID: -8689709607276630901}
+  - component: {fileID: 8383342264900519756}
+  - component: {fileID: 6951547643570614574}
+  m_Layer: 8
   m_Name: FloorS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +98,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &-8642561286321024031
@@ -125,7 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hostTransform: {fileID: 0}
   manipulationType: 3
-  twoHandedManipulationType: 63
+  twoHandedManipulationType: 0
   allowFarManipulation: 1
   useForcesForNearManipulation: 0
   oneHandRotationModeNear: 1
@@ -168,3 +172,192 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTetherWhenManipulating: 0
   IsBoundsHandles: 0
+--- !u!114 &3479250640521252767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43737539306733865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193c362eb02741c43b31788b51c83d73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focusEnabled: 1
+  prefab: {fileID: 1083549605185280, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
+  tooltipToggleAction:
+    id: 0
+    description: None
+    axisConstraint: 0
+  appearType: 0
+  vanishType: 0
+  remainType: 0
+  appearDelay: 0
+  vanishDelay: 2
+  lifetime: 1
+  keepWorldRotation: 1
+  settingsMode: 1
+  showBackground: 1
+  showOutline: 0
+  showConnector: 1
+  followType: 1
+  pivotMode: 0
+  pivotDirection: 1
+  pivotDirectionOrient: 0
+  manualPivotDirection: {x: 0, y: 1, z: 0}
+  manualPivotLocalPosition: {x: 0, y: 0, z: -1}
+  pivotDistance: 0.25
+  toolTipText: Light Wooden Floor $20
+  anchor: {fileID: 0}
+--- !u!114 &-8689709607276630901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43737539306733865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1e6657bab90ac149872e5361b42ea62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectAction:
+    id: 0
+    description: None
+    axisConstraint: 0
+  voiceSelect: []
+  dwellTimeInSec: 0.8
+  onLookAtStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8383342264900519756}
+        m_MethodName: OnLook
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  whileLookingAtTarget:
+    m_PersistentCalls:
+      m_Calls: []
+  onLookAway:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8383342264900519756}
+        m_MethodName: OnLookAway
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDwell:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  onTapDown:
+    m_PersistentCalls:
+      m_Calls: []
+  onTapUp:
+    m_PersistentCalls:
+      m_Calls: []
+  eyeCursorSnapToTargetCenter: 0
+--- !u!114 &8383342264900519756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43737539306733865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ce37e831e6b6ef44896e1d95e779fc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6951547643570614574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43737539306733865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45b3eff181cc4244a8a14234096e62fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFocusRequired: 1
+  keywords:
+  - keyword: Front
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 43737539306733865}
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - keyword: Left
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 43737539306733865}
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - keyword: Right
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 43737539306733865}
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - keyword: Back
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 43737539306733865}
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  persistentKeywords: 0
+  speechConfirmationTooltipPrefab: {fileID: 8046114618238072051, guid: 271778f6c957b524981067a81d238394,
+    type: 3}

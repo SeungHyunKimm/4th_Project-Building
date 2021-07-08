@@ -13,7 +13,11 @@ GameObject:
   - component: {fileID: 6395614522635507612}
   - component: {fileID: 6395614522635507615}
   - component: {fileID: 3032929065541005414}
-  m_Layer: 0
+  - component: {fileID: -1778270982514874645}
+  - component: {fileID: -6780674066445835332}
+  - component: {fileID: -6190243954879959211}
+  - component: {fileID: -1341973855621596851}
+  m_Layer: 8
   m_Name: WallS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hostTransform: {fileID: 0}
   manipulationType: 3
-  twoHandedManipulationType: 63
+  twoHandedManipulationType: 0
   allowFarManipulation: 1
   useForcesForNearManipulation: 0
   oneHandRotationModeNear: 1
@@ -119,6 +123,195 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0388594, y: 2.0427282, z: 0.13861632}
   m_Center: {x: 0, y: 1.0135833, z: -0.0032385588}
+--- !u!114 &-1778270982514874645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6395614522635507614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193c362eb02741c43b31788b51c83d73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focusEnabled: 1
+  prefab: {fileID: 1083549605185280, guid: afaef0108a478c44a9eac26658bc29bf, type: 3}
+  tooltipToggleAction:
+    id: 0
+    description: None
+    axisConstraint: 0
+  appearType: 0
+  vanishType: 0
+  remainType: 0
+  appearDelay: 0
+  vanishDelay: 2
+  lifetime: 1
+  keepWorldRotation: 1
+  settingsMode: 1
+  showBackground: 1
+  showOutline: 0
+  showConnector: 1
+  followType: 1
+  pivotMode: 0
+  pivotDirection: 1
+  pivotDirectionOrient: 0
+  manualPivotDirection: {x: 0, y: 1, z: 0}
+  manualPivotLocalPosition: {x: 0, y: 1.5, z: -0.2}
+  pivotDistance: 0.25
+  toolTipText: Nomal Wall $5
+  anchor: {fileID: 0}
+--- !u!114 &-6780674066445835332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6395614522635507614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1e6657bab90ac149872e5361b42ea62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectAction:
+    id: 0
+    description: None
+    axisConstraint: 0
+  voiceSelect: []
+  dwellTimeInSec: 0.8
+  onLookAtStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -6190243954879959211}
+        m_MethodName: OnLook
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  whileLookingAtTarget:
+    m_PersistentCalls:
+      m_Calls: []
+  onLookAway:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -6190243954879959211}
+        m_MethodName: OnLookAway
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDwell:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  onTapDown:
+    m_PersistentCalls:
+      m_Calls: []
+  onTapUp:
+    m_PersistentCalls:
+      m_Calls: []
+  eyeCursorSnapToTargetCenter: 0
+--- !u!114 &-6190243954879959211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6395614522635507614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ce37e831e6b6ef44896e1d95e779fc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-1341973855621596851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6395614522635507614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45b3eff181cc4244a8a14234096e62fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFocusRequired: 1
+  keywords:
+  - keyword: Front
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: -6190243954879959211}
+          m_MethodName: OnVoiceFront
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - keyword: Left
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: -6190243954879959211}
+          m_MethodName: OnVoiceLeft
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - keyword: Right
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: -6190243954879959211}
+          m_MethodName: OnVoiceRight
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - keyword: Back
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: -6190243954879959211}
+          m_MethodName: OnVoiceBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  persistentKeywords: 0
+  speechConfirmationTooltipPrefab: {fileID: 8046114618238072051, guid: 271778f6c957b524981067a81d238394,
+    type: 3}
 --- !u!1 &6678769006035365168
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,7 +323,7 @@ GameObject:
   - component: {fileID: 8885971828175467157}
   - component: {fileID: 516871515225175991}
   - component: {fileID: 8759130665100587384}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
