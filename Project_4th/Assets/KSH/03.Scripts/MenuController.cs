@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using MRTK.Tutorials.MultiUserCapabilities;
 
 
 public class MenuController : MonoBehaviour
@@ -29,8 +30,7 @@ public class MenuController : MonoBehaviour
     //베이스스크립트
     Base BS;
 
-
-   void Start()
+    void Start()
 
     {
         //SubMenu = GameObject.Find("SubMenu");
@@ -75,9 +75,9 @@ public class MenuController : MonoBehaviour
         TrashBin.SetActive(false);
 
         StartCoroutine("FindBS");
-
     }
 
+    //베이스의 베이스 스크립트 찾기
     IEnumerator FindBS() {
 
         while (GameObject.FindWithTag("Base") == null )
@@ -88,14 +88,16 @@ public class MenuController : MonoBehaviour
         GameObject bs = GameObject.FindWithTag("Base");
         //print(bs.name);
         BS = bs.GetComponent<Base>();
+        // 포톤뷰 연동해서 rpc처리하기
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            BS.OnClickImportData();
-            TrashBinActivate();
+            //rpc처리하기 임포트 시 데이터 못불러옴 
+            OnClickImport();
+            print(BS.clones.Count);
         }
     }
     public void OnClickImport() {
@@ -252,13 +254,10 @@ public class MenuController : MonoBehaviour
             idx[1] = a.transform.GetSiblingIndex()+b;
         }
 
-        //모델, 위치, 회전, 크기
-      GameObject item = BS.OnClickCreate(idx, new Vector3(0, 0.1f, -3.5f), Vector3.zero, Vector3.one);
-      //item.AddComponent<Rigidbody>();
     }
 
     
-
+  
 }
 
 

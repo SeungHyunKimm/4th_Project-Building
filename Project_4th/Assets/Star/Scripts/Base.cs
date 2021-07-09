@@ -7,7 +7,7 @@ using System.Text;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using Photon.Pun;
-//using Photon.Realtime;
+using Photon.Realtime;
 using Microsoft.MixedReality.Toolkit.Input;
 using MRTK.Tutorials.MultiUserCapabilities;
 
@@ -27,10 +27,11 @@ public class ObjectData2
 {
     public List<ObjInfo2> info = new List<ObjInfo2>();
 }
+
 public class Base : MonoBehaviourPunCallbacks
 {
     List<ObjInfo2> objInfo = new List<ObjInfo2>();
-    List<GameObject> clones = new List<GameObject>();
+   public List<GameObject> clones = new List<GameObject>();
 
     GameObject[] floor;
     float[] floorY;
@@ -40,9 +41,12 @@ public class Base : MonoBehaviourPunCallbacks
     public GameObject[] furnitures;
     public GameObject[] products;
 
-    
+    PhotonView pv;
+
+    GameObject tem;
     void Start()
     {
+        pv = GetComponent<PhotonView>();
         //포톤 뷰 붙는 프리펩들 포톤/리소스 폴더 안에 없어도 문제없게 하기
         if (PhotonNetwork.PrefabPool is DefaultPool pool)
         {
@@ -77,7 +81,7 @@ public class Base : MonoBehaviourPunCallbacks
 
     
     public void OnClickImportData() {
-
+        OnClickDelete();
         string path = Application.streamingAssetsPath + "/Building_data.json";
         //파일 있니?
         if (!File.Exists(path)) return;
@@ -126,7 +130,7 @@ public class Base : MonoBehaviourPunCallbacks
     }
 
 
-    public GameObject OnClickCreate(int[] idx, Vector3 pos, Vector3 rot, Vector3 scale)
+    public void OnClickCreate(int[] idx, Vector3 pos, Vector3 rot, Vector3 scale)
     {
        // if (!PhotonNetwork.IsMasterClient) return;
 
@@ -134,14 +138,20 @@ public class Base : MonoBehaviourPunCallbacks
         if (idx[0] == 1) { obj = furnitures;  }
         if (idx[0] == 2) { obj = products; }
 
-        Transform parent = floor[idx[2]].transform;
-
         //GameObject a = Instantiate(obj[idx[1]]);
         //포톤뷰가 붙어있어 그냥 복제 불가능, 포톤네트워크 통해 복제하되 위치, 회전, 크기는 아래에서 조절할 것이므로 아무 값이나 넣자.
-        var a = PhotonNetwork.Instantiate(obj[idx[1]].name, Vector3.one * 1000, Quaternion.identity) ;
-            
+        tem = PhotonNetwork.Instantiate(obj[idx[1]].name, Vector3.one * 1000, Quaternion.identity) ;
+        pv.RPC("RPCObjDataAdd", RpcTarget.All, idx.Length, idx[0], idx[1], idx[2], pos, rot, scale);
 
-        if (idx[2] == 0)
+            }
+
+    [PunRPC]
+    void RPCObjDataAdd(int length, int idx0, int idx1, int idx2, Vector3 pos, Vector3 rot, Vector3 scale) {
+
+        Transform parent = floor[idx2].transform;
+        int[] idx = { idx0, idx1, idx2 };
+
+        if (idx2 == 0)
         {
             // 1~3층 찾기 0번 자식은 table이라 1번부터 찾기
             for (int i = 1; i < transform.childCount; i++)
@@ -157,25 +167,24 @@ public class Base : MonoBehaviourPunCallbacks
         }
         else { }
 
-          a.transform.SetParent(parent);
-         ObjInfo2 info = new ObjInfo2();
-          info.scale = a.transform.localScale = scale;
-          info.pos = a.transform.localPosition = pos;
-          info.rot = a.transform.localEulerAngles = rot;
+        tem.transform.SetParent(parent);
+        ObjInfo2 info = new ObjInfo2();
+        info.scale = tem.transform.localScale = scale;
+        info.pos = tem.transform.localPosition = pos;
+        info.rot = tem.transform.localEulerAngles = rot;
 
-            for (int i = 0; i < idx.Length; i++)
-            {
-                info.objidx[i] = idx[i];
-            }
+        for (int i = 0; i < length; i++)
+        {
+            info.objidx[i] = idx[i];
+        }
 
-            objInfo.Add(info);
-            clones.Add(a);
-            Debug.Log(" info : "+ a.name + " " + info.objidx[2] + "층");
-            idx[2] = 0;
+        objInfo.Add(info);
+        clones.Add(tem);
+        Debug.Log(" info : " + tem.name + " " + info.objidx[2] + "층");
+        idx[2] = 0;
+        tem = null;
 
-        return a;
-            }
-
+    }
     void OnClickCreate(ObjInfo2 info)
     {
         OnClickCreate(info.objidx, info.pos, info.rot, info.scale);
@@ -323,7 +332,7 @@ public class Base : MonoBehaviourPunCallbacks
         }
 
        // 건물 본체 복사
-        Transform mini = PhotonNetwork.InstantiateRoomObject("Mini", Vector3.one * 1000, Quaternion.identity).transform;
+        Transform mini = PhotonNetwork.Instantiate("Mini", Vector3.one * 1000, Quaternion.identity).transform;
        
         //포톤뷰로 그냥 복사가 불가능해 변경
         // Transform mini = Instantiate(gameObject).transform;

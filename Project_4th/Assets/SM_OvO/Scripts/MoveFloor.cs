@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class MoveFloor : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class MoveFloor : MonoBehaviour
     int ButtonCount;
 
 
-
+    
     // 1단계
     // 만약 블록 1이 사라지면(셋엑티브펄스) 블록 2를 1의 자리로 위치시켜라(블록 1이 사라지면 블록1의 y값을 가져온다.)
     // 만약 블록 2가 사라지면(셋엑티브펄스) 블록 3을 2의 자리로 위치시켜라
@@ -52,6 +53,13 @@ public class MoveFloor : MonoBehaviour
 
     public void OnClick_SetButton()
     {
+        PhotonView pv = GetComponent<PhotonView>();
+        pv.RPC("RPCSetUp", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPCSetUp() {
+
         ButtonCount++;
         if (ButtonCount == 1)
         {
@@ -84,7 +92,7 @@ public class MoveFloor : MonoBehaviour
             secondBlock.gameObject.SetActive(true);
             thirdBlock.gameObject.SetActive(true);
 
-            
+
 
         }
 
@@ -104,7 +112,7 @@ public class MoveFloor : MonoBehaviour
             thirdBlock.position = new Vector3(thirdBlock.position.x, firstdir, thirdBlock.position.z);
             //fourthBlock.position = new Vector3(fourthBlock.position.x, seconddir, fourthBlock.position.z);
         }
-        else 
+        else
         {
             if (firstBlock.gameObject.activeSelf == true)
             {
@@ -117,7 +125,7 @@ public class MoveFloor : MonoBehaviour
             //fourthBlock.position = new Vector3(fourthBlock.position.x, firstdir, fourthBlock.position.z);
         }
 
-        
+
         //if (fourthBlock.gameObject.activeSelf == false)
         //{
         //}
