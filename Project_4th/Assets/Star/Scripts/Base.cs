@@ -7,7 +7,9 @@ using System.Text;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using Photon.Pun;
-using Photon.Realtime;
+//using Photon.Realtime;
+using Microsoft.MixedReality.Toolkit.Input;
+using MRTK.Tutorials.MultiUserCapabilities;
 
 
 [Serializable]
@@ -76,7 +78,7 @@ public class Base : MonoBehaviourPunCallbacks
     
     public void OnClickImportData() {
 
-        string path = Application.dataPath + "/Star/Editor/Building_data.json";
+        string path = Application.streamingAssetsPath + "/Building_data.json";
         //파일 있니?
         if (!File.Exists(path)) return;
 
@@ -113,8 +115,8 @@ public class Base : MonoBehaviourPunCallbacks
         string json = JsonUtility.ToJson(obj, true);
         Debug.Log(json);
 
-        // 컴퓨터에 빈 텍스트 파일 생성 
-        FileStream file = new FileStream(Application.dataPath + "/Star/Editor/Building_data_holo.json", FileMode.Create);
+        // 컴퓨터에 빈 텍스트 파일 생성
+        FileStream file = new FileStream(Application.streamingAssetsPath + "/Building_data_runtime.json", FileMode.Create);
         // 제이슨 데이터를 텍스트로 전환
         byte[] byteData = Encoding.UTF8.GetBytes(json);
         // 파일 덮어쓰기
@@ -124,14 +126,13 @@ public class Base : MonoBehaviourPunCallbacks
     }
 
 
-    public void OnClickCreate(int[] idx, Vector3 pos, Vector3 rot, Vector3 scale)
+    public GameObject OnClickCreate(int[] idx, Vector3 pos, Vector3 rot, Vector3 scale)
     {
-        if (!PhotonNetwork.IsMasterClient) return;
+       // if (!PhotonNetwork.IsMasterClient) return;
 
         GameObject[] obj = walls;
-        string type = "Walls";
-        if (idx[0] == 1) { obj = furnitures; type = "Furnitures"; }
-        if (idx[0] == 2) { obj = products; type = "Products"; }
+        if (idx[0] == 1) { obj = furnitures;  }
+        if (idx[0] == 2) { obj = products; }
 
         Transform parent = floor[idx[2]].transform;
 
@@ -169,12 +170,13 @@ public class Base : MonoBehaviourPunCallbacks
 
             objInfo.Add(info);
             clones.Add(a);
-            Debug.Log(" info : " + type + " " + a.name + " " + info.objidx[2] + "층");
+            Debug.Log(" info : "+ a.name + " " + info.objidx[2] + "층");
             idx[2] = 0;
-            }
-        
 
-      void OnClickCreate(ObjInfo2 info)
+        return a;
+            }
+
+    void OnClickCreate(ObjInfo2 info)
     {
         OnClickCreate(info.objidx, info.pos, info.rot, info.scale);
     }  
@@ -187,13 +189,21 @@ public class Base : MonoBehaviourPunCallbacks
         objInfo.RemoveAt(clones.IndexOf(a));
         clones.Remove(a);
 
-        a.transform.position = Vector3.one * 1000;
-        a.SetActive(false);
+        //a.transform.position = Vector3.one * 1000;
+        //a.SetActive(false);
         //디스트로이하면 mrtk자체 오류남
         //Destroy(a);
+
+        PhotonNetwork.Destroy(a);
     }
 
-    public void OnClickDelete() {
+    //데이터 없이 삭제만 한다.
+    public void OnClickDestroy(Collider other)
+    {
+        PhotonNetwork.Destroy(other.gameObject);
+    }
+
+        public void OnClickDelete() {
         for (int i = 0; i < clones.Count; i++)
         {
             Destroy(clones[i]);
@@ -291,21 +301,50 @@ public class Base : MonoBehaviourPunCallbacks
 
     //미니어쳐 함수
     //송도 작은 구역과 함께 나타나게 수정하기
+    //그냥 베이스를 콘타의 자식으로 우선 해두고 콘타 메쉬를 비활성화 하자..?
+    //** objstar랑 nearGrab, pv(takeover), ownershiptransfer, netsyc_star 추가되고
+    // 메쉬 콜라이더 있는 콘타프리펩 퍼블릭으로 가져오기(convex!)
+    //** 콘타랑 베이스 프리펩풀에 넣기 베이스 이름은 미니로 변경
+    //**포톤으로 복제하기
+    //미니를 콘타의 자식으로 바꾸기
+    //미니 위치 조금 위로 만들기
+
     public void OnClickMini(Transform player) {
-        
+
+        if (PhotonNetwork.PrefabPool is DefaultPool pool) {
+            if (pool.ResourceCache.ContainsKey("Mini"))
+            {
+                pool.ResourceCache.Remove("Mini");
+               pool.ResourceCache.Add("Mini", gameObject);
+            }
+            else { 
+               pool.ResourceCache.Add("Mini", gameObject);
+            }
+        }
+
        // 건물 본체 복사
-        Transform mini = Instantiate(gameObject).transform;
-        mini.name = "Mini";
+        Transform mini = PhotonNetwork.InstantiateRoomObject("Mini", Vector3.one * 1000, Quaternion.identity).transform;
+       
+        //포톤뷰로 그냥 복사가 불가능해 변경
+        // Transform mini = Instantiate(gameObject).transform;
+        //mini.name = "Mini";
         mini.GetComponent<Base>().enabled = false ;
-        // 바운드 박스로 움직이게 하자
-        //BoundingBox bBox = 
-         mini.gameObject.AddComponent<BoundingBox>();
-        // 미니어쳐라 10분의 1크기
-        mini.localScale = Vector3.one * .1f;
+        // 잡고 조정 가능하게 하자
+        mini.GetComponent<BoundsControl>().enabled = true;
+        mini.GetComponent<ObjectManipulator>().enabled = true;
+        mini.GetComponent<NearInteractionGrabbable>().enabled = true;
+        // 미니어쳐라 10cm
+        mini.localScale = Vector3.one * .0125f;
         // 포톤 접속 시 플레이어 찾을 수 없어 매개변수로 받아 실행하자.
-        // 플레이어 스크립트에서 base.cs 받아와서 버튼으로 처리하기
         mini.position = player.position + Vector3.forward * .1f;
 
     }
 
+    public void GetShared(Transform parent)
+    {
+        // 마스터면 리턴하기 두번째 유저만 앵커 가져와야 함
+        if (PhotonNetwork.IsMasterClient) return;
+        SharingModuleScript sms = parent.GetComponent<SharingModuleScript>();
+        sms.GetAzureAnchor();
+    }
 }

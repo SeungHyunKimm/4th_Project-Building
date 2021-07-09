@@ -26,29 +26,43 @@ public class MenuController : MonoBehaviour
     int furnitureMenuCnt = 0;
     int trashbinCnt = 0;
 
-    //가구 프리팹 배열
-    GameObject[] Furniture_;
-
     //베이스스크립트
     Base BS;
 
-    void Start()
+
+   void Start()
 
     {
-        SubMenu = GameObject.Find("SubMenu");
-        MainMenu = GameObject.Find("MainMenu");
-        EditMenu = GameObject.Find("EditMenu");
-        EditScale = GameObject.Find("EditScale");
-        FurnitureMenu = GameObject.Find("FurnitureMenu");
+        //SubMenu = GameObject.Find("SubMenu");
+        //MainMenu = GameObject.Find("MainMenu");
+        //EditMenu = GameObject.Find("EditMenu");
+        //EditScale = GameObject.Find("EditScale");
+        //FurnitureMenu = GameObject.Find("FurnitureMenu");
+
+        ////가구 프리팹 관련 메뉴 설정
+
+        //Wall_Plate = GameObject.Find("Wall_Plate");
+        //Furniture_Plate = GameObject.Find("Furniture_Plate");
+        //Product_Plate = GameObject.Find("Product_Plate");
+
+        ////쓰레기통
+        //TrashBin = GameObject.Find("Collision_TrashBin");
+
+
+        SubMenu = transform.GetChild(1).gameObject;
+        MainMenu = transform.GetChild(0).gameObject;
+        EditMenu = transform.GetChild(2).gameObject;
+        EditScale = transform.GetChild(3).gameObject;
+        FurnitureMenu = transform.GetChild(4).gameObject;
 
         //가구 프리팹 관련 메뉴 설정
 
-        Wall_Plate = GameObject.Find("Wall_Plate");
-        Furniture_Plate = GameObject.Find("Furniture_Plate");
-        Product_Plate = GameObject.Find("Product_Plate");
+        Wall_Plate = transform.GetChild(5).gameObject;
+        Furniture_Plate = transform.GetChild(6).gameObject;
+        Product_Plate = transform.GetChild(7).gameObject;
 
         //쓰레기통
-        TrashBin = GameObject.Find("Collision_TrashBin");
+        TrashBin = transform.GetChild(8).gameObject;
 
 
         SubMenu.SetActive(false);
@@ -72,7 +86,7 @@ public class MenuController : MonoBehaviour
         }
         //가구 프리팹 배열 선언
         GameObject bs = GameObject.FindWithTag("Base");
-        print(bs.name);
+        //print(bs.name);
         BS = bs.GetComponent<Base>();
     }
 
@@ -84,6 +98,37 @@ public class MenuController : MonoBehaviour
             TrashBinActivate();
         }
     }
+    public void OnClickImport() {
+        BS.OnClickImportData();
+    }
+
+    public void OnClickExport()
+    {
+        BS.OnClickExportData();
+    }
+
+    public void OnClickDelete()
+    {
+        BS.OnClickDelete();
+    }
+
+    public void OnClickFloor()
+    {
+        MoveFloor mf = BS.transform.GetComponent<MoveFloor>();
+        mf.OnClick_SetButton();
+    }
+
+    public void OnClickGetShared() {
+        //메뉴컨트롤러의 부모부모가 포톤로케이션이란 것을 확인
+        //포톤 써야해서 베이스 스크립트로 이동시킴
+        BS.GetShared(transform.parent.parent);
+    }
+
+    public void OnClickMini() {
+        //메뉴의 부모는 유저1 베이스 스크립트 수정필요
+        BS.OnClickMini(transform.parent);
+    }
+
     public void OnClickMainMenu()
     {
         //서브메뉴 8가지가 나타난다.
@@ -148,6 +193,7 @@ public class MenuController : MonoBehaviour
     {
         Product_Plate.SetActive(true);
     }
+
     //가구 프리팹 메뉴 모두 비활성화
     public void OnClickAll_PlateClose()
     {
@@ -174,14 +220,21 @@ public class MenuController : MonoBehaviour
 
     public void OnClickMake(GameObject a)
     {
+        // 3숫자 배열 정해 아이템 생성하기
+        // 종류, 모델, 층(층은 0이면 활성화된걸로 알아서 귀속됨)
         int[] idx = { 0, 0, 0 };
+        
+        //버튼a의 계층번호와 프리펩 번호순을 같게 세팅함
         idx[1] = a.transform.GetSiblingIndex();
 
-        if (a.transform.root.name.Contains("Wall"))
+        //종류 구분을 위해 버튼의 부모부모에 각자 타입에 맞는 이름 넣어줌
+        Transform type = a.transform.parent.parent;
+
+        if (type.name.Contains("Wall"))
         {
             idx[0] = 0;
         }
-        else if (a.transform.root.name.Contains("Furniture"))
+        else if (type.name.Contains("Furniture"))
         {
             idx[0] = 1;
         }
@@ -189,19 +242,22 @@ public class MenuController : MonoBehaviour
         {
             idx[0] = 2;
         }
+
+        //그 중에도 레이아웃으로 버튼이 따로 묶인게 있어 구별하기
         if(a.transform.parent.GetSiblingIndex() == 2)
         {
-            Transform firstP = a.transform.parent.parent.GetChild(1);
+            Transform firstP = type.GetChild(1);
+            // 프리펩 순서와 맞추기 위해 그전 버튼의 총갯수 구해 더해주기
             int b = firstP.childCount;
             idx[1] = a.transform.GetSiblingIndex()+b;
         }
 
-        BS.OnClickCreate(idx, Vector3.one * 0.1f, Vector3.zero, Vector3.one);
+        //모델, 위치, 회전, 크기
+      GameObject item = BS.OnClickCreate(idx, new Vector3(0, 0.1f, -3.5f), Vector3.zero, Vector3.one);
+      //item.AddComponent<Rigidbody>();
     }
 
-
-
-
+    
 
 }
 

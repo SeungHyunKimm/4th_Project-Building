@@ -11,15 +11,27 @@ public class OnCollision : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         print("충돌 감지 완료");
+        
+        bs = GameObject.Find("Base").GetComponent<Base>();
+
         if (other.transform.name == "Mini")
         {
-            other.transform.position = Vector3.one * 1000;
-            other.gameObject.SetActive(false);
+            // 미니어쳐랑 부딧치면 비활성화만 하자
+            //other.transform.position = Vector3.one * 1000;
+            //other.gameObject.SetActive(false);
             //Destroy(other);
+            //비활성화 대신 포톤네트워크로 삭제해준다.
+            //아래 게임오브젝트 받는 함수랑은 overload로 차이 둠
+            bs.OnClickDestroy(other);
         }
-        else { 
-        bs = GameObject.Find("Base").GetComponent<Base>();
-        bs.OnClickDestroy(other.gameObject);
+        // 플레이어나 메뉴랑 부딪히면 작동안하기
+        else if (other.transform.name.Contains("Menu") 
+            && other.transform.name.Contains("User")
+            ) { }
+        else {
+            // 그 외에는 데이터랑 같이 비활성화하자
+            // 데이터랑 같이 포톤네트워크로 삭제해준다.
+            bs.OnClickDestroy(other.gameObject);
         }
 
     }

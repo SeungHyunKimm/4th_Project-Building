@@ -252,7 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFocusRequired: 1
   keywords:
-  - keyword: Front
+  - keyword: Go Front
     response:
       m_PersistentCalls:
         m_Calls:
@@ -267,7 +267,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - keyword: Left
+  - keyword: Go Left
     response:
       m_PersistentCalls:
         m_Calls:
@@ -282,7 +282,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - keyword: Right
+  - keyword: Go Right
     response:
       m_PersistentCalls:
         m_Calls:
@@ -297,7 +297,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - keyword: Back
+  - keyword: Go Back
     response:
       m_PersistentCalls:
         m_Calls:

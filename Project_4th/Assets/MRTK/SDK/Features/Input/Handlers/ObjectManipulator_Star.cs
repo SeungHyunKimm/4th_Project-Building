@@ -106,6 +106,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
             set => twoHandedManipulationType = value;
         }
 
+        //ㅂ수정중 스케일 방향조절 필요해서 
         public void OnClickScaleX() {
             if (TwoHandedManipulationType != TransformFlags.Scale_x) TwoHandedManipulationType = TransformFlags.Scale_x;
             else TwoHandedManipulationType = (TransformFlags)0;
@@ -739,22 +740,39 @@ namespace Microsoft.MixedReality.Toolkit.UI
             }
             
                 //ㅂ수정중
-            if (twoHandedManipulationType.HasFlag(TransformFlags.Scale_x)
-                || twoHandedManipulationType.HasFlag(TransformFlags.Scale_y)
-                || twoHandedManipulationType.HasFlag(TransformFlags.Scale_z)
-                )
-            {
-               targetTransform.Scale = scaleLogic.UpdateMap(handPositionArray);
-                                targetTransform.Scale = new Vector3(targetTransform.Scale.x, .1f, .1f);
-                if (twoHandedManipulationType.HasFlag(TransformFlags.Scale_y)) targetTransform.Scale = new Vector3(.1f, targetTransform.Scale.y, .1f);
-                if (twoHandedManipulationType.HasFlag(TransformFlags.Scale_z)) targetTransform.Scale = new Vector3(.1f, .1f, targetTransform.Scale.z);
+            //if (twoHandedManipulationType.HasFlag(TransformFlags.Scale_x)
+            //    || twoHandedManipulationType.HasFlag(TransformFlags.Scale_y)
+            //    || twoHandedManipulationType.HasFlag(TransformFlags.Scale_z)
+            //    )
+            //{
+               Vector3 update = scaleLogic.UpdateMap(handPositionArray);
+                if (twoHandedManipulationType.HasFlag(TransformFlags.Scale_x))
+                { targetTransform.Scale = new Vector3(update.x, targetTransform.Scale.y, targetTransform.Scale.z);
 
-                Debug.Log(gameObject.name +"의 크기:" + targetTransform.Scale.ToString());
                 if (EnableConstraints && constraintsManager != null)
                 {
                     constraintsManager.ApplyScaleConstraints(ref targetTransform, false, IsNearManipulation());
                 }
             }
+                if (twoHandedManipulationType.HasFlag(TransformFlags.Scale_y))
+                { targetTransform.Scale = new Vector3(targetTransform.Scale.x, update.y, targetTransform.Scale.z);
+
+                if (EnableConstraints && constraintsManager != null)
+                {
+                    constraintsManager.ApplyScaleConstraints(ref targetTransform, false, IsNearManipulation());
+                }
+            }
+                if (twoHandedManipulationType.HasFlag(TransformFlags.Scale_z))
+                {   targetTransform.Scale = new Vector3(targetTransform.Scale.x, targetTransform.Scale.y, update.z);
+            
+                if (EnableConstraints && constraintsManager != null)
+                {
+                    constraintsManager.ApplyScaleConstraints(ref targetTransform, false, IsNearManipulation());
+                }
+            }
+
+                //Debug.Log(gameObject.name +"의 크기:" + targetTransform.Scale.ToString());
+            //}
 
 
             if (twoHandedManipulationType.HasFlag(TransformFlags.Rotate))
@@ -1033,7 +1051,8 @@ namespace Microsoft.MixedReality.Toolkit.UI
             if (rigidBody != null)
             {
                 rigidBody.useGravity = wasGravity;
-                rigidBody.isKinematic = wasKinematic;
+                //ㅂ수정(중력 부여 필요)
+                rigidBody.isKinematic = false;
 
                 // Match the object's velocity to the controller for near interactions
                 // Otherwise keep the objects current velocity so that it's not dampened unnaturally

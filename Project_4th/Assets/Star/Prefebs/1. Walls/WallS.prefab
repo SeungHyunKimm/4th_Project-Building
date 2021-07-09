@@ -20,6 +20,8 @@ GameObject:
   - component: {fileID: 4657032995399910184}
   - component: {fileID: -3746105876354817429}
   - component: {fileID: 7780307350284214951}
+  - component: {fileID: -877885816995011521}
+  - component: {fileID: -525939159410090316}
   m_Layer: 8
   m_Name: WallS
   m_TagString: Untagged
@@ -334,7 +336,7 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: -644634375988466824, guid: 0b6c7ec51c1d9574a85deb814efb71f8, type: 3}
+  - {fileID: -3746105876354817429}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -361,6 +363,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 130ef06c1c6d9a8408a37662e933b938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &-877885816995011521
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6395614522635507614}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &-525939159410090316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6395614522635507614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497140c8c41942c4689569c1cc99291f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6678769006035365168

@@ -52,28 +52,28 @@ MonoBehaviour:
       description: None
       axisConstraint: 0
   - localizationKey: 
-    keyword: Front
+    keyword: Show Me Front
     keyCode: 9
     action:
       id: 0
       description: None
       axisConstraint: 0
   - localizationKey: 
-    keyword: Left
+    keyword: Show Me Left
     keyCode: 283
     action:
       id: 0
       description: None
       axisConstraint: 0
   - localizationKey: 
-    keyword: Right
+    keyword: Show Me Right
     keyCode: 284
     action:
       id: 0
       description: None
       axisConstraint: 0
   - localizationKey: 
-    keyword: Back
+    keyword: Show Me Back
     keyCode: 285
     action:
       id: 0

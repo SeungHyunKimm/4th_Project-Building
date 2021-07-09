@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2265757978100513692}
   - component: {fileID: 8134074771393733639}
   - component: {fileID: 2213138637522731340}
+  - component: {fileID: 5776230036869669150}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
@@ -93,6 +94,28 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5776230036869669150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819314519552634645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6616126462058805941
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +125,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6616126462058805940}
-  - component: {fileID: 1374971481784371595}
   m_Layer: 0
   m_Name: 1st
   m_TagString: Untagged
@@ -124,28 +146,6 @@ Transform:
   m_Father: {fileID: 6616126462470883473}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1374971481784371595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6616126462058805941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &6616126462470883694
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,8 +158,10 @@ GameObject:
   - component: {fileID: 6616126462470883474}
   - component: {fileID: 6616126462470883475}
   - component: {fileID: 6616126462470883472}
+  - component: {fileID: -8748821872731997816}
   - component: {fileID: -218497621625706535}
   - component: {fileID: 7728092127204454494}
+  - component: {fileID: 3575481877331349931}
   m_Layer: 0
   m_Name: Base
   m_TagString: Base
@@ -293,6 +295,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   elasticsManager: {fileID: 0}
+--- !u!114 &-8748821872731997816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6616126462470883694}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5afd5316c63705643b3daba5a6e923bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTetherWhenManipulating: 0
+  IsBoundsHandles: 0
 --- !u!114 &-218497621625706535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,6 +377,18 @@ MonoBehaviour:
   - {fileID: 5597685777745905018, guid: 079d902c3c7ccd447b16fe5128fce15d, type: 3}
   - {fileID: 434784640231198300, guid: aa7f862e2330cea41b5a4717e0715e1d, type: 3}
   - {fileID: 4630850159245965005, guid: 40e5bc060972f7e44b8065e46dc3096b, type: 3}
+--- !u!114 &3575481877331349931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6616126462470883694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1f599ee8d3bb0043a9a69cf0423d3cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6616126463026022140
 GameObject:
   m_ObjectHideFlags: 0
