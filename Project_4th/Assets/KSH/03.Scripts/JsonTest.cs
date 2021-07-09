@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Text;
 
-[SerializeField]
+[Serializable]
 public struct UserInfo
 {
     public int age;
@@ -18,6 +18,7 @@ public struct UserInfo
     public int Level;
     public string Class;
 }
+
 
 
 public class JsonTest : MonoBehaviour
