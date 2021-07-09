@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 1083549605185280}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4983009381304104}
   - {fileID: 4599297741613436}
@@ -61,11 +61,11 @@ MonoBehaviour:
   pivot: {fileID: 1689994015351696}
   label: {fileID: 1468030888342674}
   contentParent: {fileID: 1486990241750050}
-  toolTipText: Tooltip Text
-  backgroundPadding: {x: 0.075, y: 0.015}
+  toolTipText: ' '
+  backgroundPadding: {x: 0, y: 0}
   backgroundOffset: {x: 0, y: 0, z: 0}
-  contentScale: 2
-  fontSize: 30
+  contentScale: 2.23
+  fontSize: 35
   attachPointType: 9
   attachPointOffset: {x: 0, y: 0, z: 0}
   toolTipLine: {fileID: 114254035704318198}
@@ -175,7 +175,7 @@ MonoBehaviour:
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
   endPoint:
-    position: {x: 0, y: 0.21504645, z: 0}
+    position: {x: 0, y: 32212254, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &114570207066485496
 MonoBehaviour:
@@ -324,7 +324,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0.21504645, z: 0}
+  - {x: 0, y: 32212254, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.01
@@ -399,7 +399,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8703351608647524776}
   - component: {fileID: 179178002932158396}
-  - component: {fileID: 8935381897906158519}
   - component: {fileID: 8338141462611959454}
   - component: {fileID: 7446970764068212843}
   m_Layer: 0
@@ -467,14 +466,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &8935381897906158519
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1468030888342674}
-  m_Mesh: {fileID: 0}
 --- !u!222 &8338141462611959454
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -502,7 +493,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tooltip Text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: afc8299d5d5bbd440a0616c8ecbc7217, type: 2}
   m_sharedMaterial: {fileID: 21340371490990018, guid: afc8299d5d5bbd440a0616c8ecbc7217,
@@ -525,21 +516,21 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
-  m_textAlignment: 544
+  m_HorizontalAlignment: 32
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -601,7 +592,7 @@ Transform:
   m_GameObject: {fileID: 1486990241750050}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 8703351608647524776}
   - {fileID: 4892726138630008}
@@ -653,7 +644,7 @@ Transform:
   m_GameObject: {fileID: 1524834073222450}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.001}
-  m_LocalScale: {x: 0.15317991, y: 0.03495355, z: 1}
+  m_LocalScale: {x: -21474836, y: -21474836, z: 1}
   m_Children: []
   m_Father: {fileID: 4411840848280898}
   m_RootOrder: 1
