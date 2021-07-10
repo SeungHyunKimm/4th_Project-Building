@@ -8,7 +8,7 @@ public class Check : MonoBehaviour
     {
         print(collision.gameObject.name);
         if (collision.gameObject.name.Contains("Floor")
-            || collision.gameObject.name.Contains("Table")
+            || collision.gameObject.name.Contains("Ground")
             ) {
            StartCoroutine(drop());
         }

@@ -27,6 +27,7 @@ public class OnCollision : MonoBehaviour
         // 플레이어나 메뉴랑 부딪히면 작동안하기
         else if (other.transform.name.Contains("Menu") 
             && other.transform.name.Contains("User")
+            && other.transform.name.Contains("Ground")
             ) { }
         else {
             // 그 외에는 데이터랑 같이 비활성화하자

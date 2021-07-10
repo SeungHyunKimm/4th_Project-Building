@@ -46,6 +46,11 @@ MonoBehaviour:
   - PunRPC_TogglePlacementHints
   - RPCSetUp
   - RPCObjDataAdd
+  - RPC_X
+  - RPC_Y
+  - RPC_Z
+  - RPCClear
+  - RPCDataRemove
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

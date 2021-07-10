@@ -100,6 +100,7 @@ public class MenuController : MonoBehaviour
             print(BS.clones.Count);
         }
     }
+
     public void OnClickImport() {
         BS.OnClickImportData();
     }
@@ -121,15 +122,31 @@ public class MenuController : MonoBehaviour
     }
 
     public void OnClickGetShared() {
-        //메뉴컨트롤러의 부모부모가 포톤로케이션이란 것을 확인
+        //메뉴컨트롤러의 부모가 포톤로케이션
         //포톤 써야해서 베이스 스크립트로 이동시킴
-        BS.GetShared(transform.parent.parent);
+        BS.GetShared(transform.parent);
     }
 
     public void OnClickMini() {
-        //메뉴의 부모는 유저1 베이스 스크립트 수정필요
-        BS.OnClickMini(transform.parent);
+        BS.OnClickMini(SubMenu.transform);
     }
+
+    public void OnClickX()
+    {
+        BS.OnClickScaleXTotal();
+    }
+
+    public void OnClickY()
+    {
+        BS.OnClickScaleYTotal();
+    }
+    
+    public void OnClickZ()
+    {
+        BS.OnClickScaleZTotal();
+    }
+
+
 
     public void OnClickMainMenu()
     {
@@ -254,6 +271,7 @@ public class MenuController : MonoBehaviour
             idx[1] = a.transform.GetSiblingIndex()+b;
         }
 
+        BS.OnClickCreate(idx, SubMenu.transform.position + Vector3.forward, Vector3.zero, Vector3.one);
     }
 
     

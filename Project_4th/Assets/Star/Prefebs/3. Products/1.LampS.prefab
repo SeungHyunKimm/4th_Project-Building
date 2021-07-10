@@ -14,16 +14,15 @@ GameObject:
   - component: {fileID: 4202874250017120432}
   - component: {fileID: 8435218599792982942}
   - component: {fileID: 11256013000310427}
-  - component: {fileID: 878775531777044237}
-  - component: {fileID: 640802076016578875}
   - component: {fileID: 4163458113884686030}
   - component: {fileID: 2316771601204992208}
   - component: {fileID: 5217922144519450678}
   - component: {fileID: 3458887110955978810}
   - component: {fileID: 651404157980291172}
+  - component: {fileID: -8490484101974247701}
   m_Layer: 0
   m_Name: 1.LampS
-  m_TagString: Untagged
+  m_TagString: Items
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,80 +134,6 @@ MonoBehaviour:
   pivotDistance: 0.25
   toolTipText: Simple Lamp $13
   anchor: {fileID: 0}
---- !u!114 &878775531777044237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1081723483757524643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1e6657bab90ac149872e5361b42ea62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectAction:
-    id: 0
-    description: None
-    axisConstraint: 0
-  voiceSelect: []
-  dwellTimeInSec: 0.8
-  onLookAtStart:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 640802076016578875}
-        m_MethodName: OnLook
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  whileLookingAtTarget:
-    m_PersistentCalls:
-      m_Calls: []
-  onLookAway:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 640802076016578875}
-        m_MethodName: OnLookAway
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onDwell:
-    m_PersistentCalls:
-      m_Calls: []
-  onSelected:
-    m_PersistentCalls:
-      m_Calls: []
-  onTapDown:
-    m_PersistentCalls:
-      m_Calls: []
-  onTapUp:
-    m_PersistentCalls:
-      m_Calls: []
-  eyeCursorSnapToTargetCenter: 0
---- !u!114 &640802076016578875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1081723483757524643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ce37e831e6b6ef44896e1d95e779fc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4163458113884686030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,12 +148,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFocusRequired: 1
   keywords:
-  - keyword: Front
+  - keyword: Show Me Front
     response:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1830147865639789361, guid: 6a42c2071015d0a4c87557d270ec1db9,
-            type: 3}
+        - m_Target: {fileID: -8490484101974247701}
           m_MethodName: OnVoiceFront
           m_Mode: 1
           m_Arguments:
@@ -239,12 +163,11 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - keyword: Left
+  - keyword: Show Me Left
     response:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1830147865639789361, guid: 6a42c2071015d0a4c87557d270ec1db9,
-            type: 3}
+        - m_Target: {fileID: -8490484101974247701}
           m_MethodName: OnVoiceLeft
           m_Mode: 1
           m_Arguments:
@@ -255,12 +178,11 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - keyword: Right
+  - keyword: Show Me Right
     response:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1830147865639789361, guid: 6a42c2071015d0a4c87557d270ec1db9,
-            type: 3}
+        - m_Target: {fileID: -8490484101974247701}
           m_MethodName: OnVoiceRight
           m_Mode: 1
           m_Arguments:
@@ -271,12 +193,11 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - keyword: Back
+  - keyword: Show Me Back
     response:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1830147865639789361, guid: 6a42c2071015d0a4c87557d270ec1db9,
-            type: 3}
+        - m_Target: {fileID: -8490484101974247701}
           m_MethodName: OnVoiceBack
           m_Mode: 1
           m_Arguments:
@@ -381,6 +302,18 @@ MonoBehaviour:
   onHoverExited:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-8490484101974247701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081723483757524643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ce37e831e6b6ef44896e1d95e779fc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5542261190955385891
 GameObject:
   m_ObjectHideFlags: 0

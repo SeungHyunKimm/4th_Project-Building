@@ -19,7 +19,7 @@ namespace MRTK.Tutorials.MultiUserCapabilities
            username = "User" + PhotonNetwork.NickName;
            pv.RPC("PunRPC_SetNickName", RpcTarget.AllBuffered, username);
 
-           // StartCoroutine(ASA());
+            StartCoroutine(ASA());
         }
 
 
@@ -50,22 +50,27 @@ namespace MRTK.Tutorials.MultiUserCapabilities
         IEnumerator ASA() {
            
             //혼자 접속 중이면 while 돌기
-            while (PhotonNetwork.CurrentRoom.PlayerCount >= 1)
+            while (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
             {
             yield return null;
             }
 
-            // 둘 이상이면 
             AnchorModuleScript ams = transform.parent.GetComponent<AnchorModuleScript>();
+            SharingModuleScript sms = transform.parent.GetComponent<SharingModuleScript>();
+
+            if (PhotonNetwork.IsMasterClient) {
+            // 둘 이상이면 
             //앵커모듈 동기화하기
             ams.StartAzureSession();
-            // 내가 마스터가 아니면 빠져나오기
-            if (!PhotonNetwork.IsMasterClient) yield break;
             // 유저의 부모는 포톤로케이션(테이블앵커 붙어있음);
             ams.CreateAzureAnchor(transform.parent.gameObject);
-            SharingModuleScript sms = transform.parent.GetComponent<SharingModuleScript>();
             sms.ShareAzureAnchor();
-
+            }
+            else {
+            // 내가 마스터가 아니면 1초 후 세션 시작하기
+            yield return new WaitForSeconds(3);
+            ams.StartAzureSession();
+            }
         }
     }
 }

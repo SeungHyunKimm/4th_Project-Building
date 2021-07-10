@@ -31,11 +31,11 @@ public class ObjectData2
 public class Base : MonoBehaviourPunCallbacks
 {
     List<ObjInfo2> objInfo = new List<ObjInfo2>();
-   public List<GameObject> clones = new List<GameObject>();
+    public List<GameObject> clones = new List<GameObject>();
 
     GameObject[] floor;
     float[] floorY;
-   public bool[] isOnOff;
+    public bool[] isOnOff;
 
     public GameObject[] walls;
     public GameObject[] furnitures;
@@ -44,6 +44,7 @@ public class Base : MonoBehaviourPunCallbacks
     PhotonView pv;
 
     GameObject tem;
+    int listidx;
     void Start()
     {
         pv = GetComponent<PhotonView>();
@@ -52,17 +53,17 @@ public class Base : MonoBehaviourPunCallbacks
         {
             for (int i = 0; i < walls.Length; i++)
             {
-            if (walls[i] != null) pool.ResourceCache.Add(walls[i].name, walls[i]);
-            }  
-            
+                if (walls[i] != null) pool.ResourceCache.Add(walls[i].name, walls[i]);
+            }
+
             for (int i = 0; i < furnitures.Length; i++)
             {
-            if (furnitures[i] != null) pool.ResourceCache.Add(furnitures[i].name, furnitures[i]);
-            }  
-            
+                if (furnitures[i] != null) pool.ResourceCache.Add(furnitures[i].name, furnitures[i]);
+            }
+
             for (int i = 0; i < products.Length; i++)
             {
-            if (products[i] != null) pool.ResourceCache.Add(products[i].name, products[i]);
+                if (products[i] != null) pool.ResourceCache.Add(products[i].name, products[i]);
             }
 
         }
@@ -79,7 +80,7 @@ public class Base : MonoBehaviourPunCallbacks
         }
     }
 
-    
+
     public void OnClickImportData() {
         OnClickDelete();
         string path = Application.streamingAssetsPath + "/Building_data.json";
@@ -116,42 +117,57 @@ public class Base : MonoBehaviourPunCallbacks
         ObjectData2 obj = new ObjectData2();
         // ObjectData  형식을 제이슨을 통해 스트링으로변환
         obj.info = objInfo;
-        string json = JsonUtility.ToJson(obj, true);
-        Debug.Log(json);
+        string json = JsonUtility.ToJson(obj);
 
         // 컴퓨터에 빈 텍스트 파일 생성
-        FileStream file = new FileStream(Application.streamingAssetsPath + "/Building_data_runtime.json", FileMode.Create);
+        FileStream file = new FileStream(Application.streamingAssetsPath + "/Building_data.json", FileMode.Create);
         // 제이슨 데이터를 텍스트로 전환
         byte[] byteData = Encoding.UTF8.GetBytes(json);
         // 파일 덮어쓰기
         file.Write(byteData, 0, byteData.Length);
         // 닫아주기!!!
         file.Close();
+
+        print(json);
     }
 
 
     public void OnClickCreate(int[] idx, Vector3 pos, Vector3 rot, Vector3 scale)
     {
-       // if (!PhotonNetwork.IsMasterClient) return;
+        // if (!PhotonNetwork.IsMasterClient) return;
 
         GameObject[] obj = walls;
-        if (idx[0] == 1) { obj = furnitures;  }
+        if (idx[0] == 1) { obj = furnitures; }
         if (idx[0] == 2) { obj = products; }
 
         //GameObject a = Instantiate(obj[idx[1]]);
         //포톤뷰가 붙어있어 그냥 복제 불가능, 포톤네트워크 통해 복제하되 위치, 회전, 크기는 아래에서 조절할 것이므로 아무 값이나 넣자.
-        tem = PhotonNetwork.Instantiate(obj[idx[1]].name, Vector3.one * 1000, Quaternion.identity) ;
-        pv.RPC("RPCObjDataAdd", RpcTarget.All, idx.Length, idx[0], idx[1], idx[2], pos, rot, scale);
-
-            }
+        tem = PhotonNetwork.Instantiate(obj[idx[1]].name, Vector3.one * 1000, Quaternion.identity);
+        pv.RPC("RPCObjDataAdd", RpcTarget.All, idx, pos, rot, scale, obj[idx[1]].name);
+    }
 
     [PunRPC]
-    void RPCObjDataAdd(int length, int idx0, int idx1, int idx2, Vector3 pos, Vector3 rot, Vector3 scale) {
+    void RPCObjDataAdd(int[] idx, Vector3 pos, Vector3 rot, Vector3 scale, string name) {
 
-        Transform parent = floor[idx2].transform;
-        int[] idx = { idx0, idx1, idx2 };
+        Transform parent = floor[idx[2]].transform;
 
-        if (idx2 == 0)
+        if (tem == null)
+        {
+            GameObject[] temp = GameObject.FindGameObjectsWithTag("Items");
+            for (int i = 0; i < temp.Length; i++)
+            {
+                if (temp[i].name.Contains(name))
+                {
+                    print(temp[i].transform.parent);
+                    if (temp[i].transform.parent == null)
+                        tem = temp[i];
+                    break;
+                }
+
+            }
+        }
+
+        if (idx[2] == 0)
         {
             // 1~3층 찾기 0번 자식은 table이라 1번부터 찾기
             for (int i = 1; i < transform.childCount; i++)
@@ -173,7 +189,7 @@ public class Base : MonoBehaviourPunCallbacks
         info.pos = tem.transform.localPosition = pos;
         info.rot = tem.transform.localEulerAngles = rot;
 
-        for (int i = 0; i < length; i++)
+        for (int i = 0; i < idx.Length; i++)
         {
             info.objidx[i] = idx[i];
         }
@@ -188,22 +204,27 @@ public class Base : MonoBehaviourPunCallbacks
     void OnClickCreate(ObjInfo2 info)
     {
         OnClickCreate(info.objidx, info.pos, info.rot, info.scale);
-    }  
+    }
 
     // 아이템 없에는 함수
     // 내가 어떤걸 집었는지 알 수 없어 매개변수로 담게 만듬
     public void OnClickDestroy(GameObject a)
     {
         // 레이로 집어서 쓰레기통에 버린다. How?? 고민하자
-        objInfo.RemoveAt(clones.IndexOf(a));
-        clones.Remove(a);
-
+        listidx = clones.IndexOf(a);
+        pv.RPC("RPCDataRemove", RpcTarget.All, listidx);
         //a.transform.position = Vector3.one * 1000;
         //a.SetActive(false);
         //디스트로이하면 mrtk자체 오류남
         //Destroy(a);
-
         PhotonNetwork.Destroy(a);
+    }
+
+    // 데이터 부분삭제 동기화
+    [PunRPC]
+    void RPCDataRemove(int list) {
+        objInfo.RemoveAt(list);
+        clones.RemoveAt(list);
     }
 
     //데이터 없이 삭제만 한다.
@@ -212,11 +233,18 @@ public class Base : MonoBehaviourPunCallbacks
         PhotonNetwork.Destroy(other.gameObject);
     }
 
-        public void OnClickDelete() {
+    public void OnClickDelete()
+    {
         for (int i = 0; i < clones.Count; i++)
         {
-            Destroy(clones[i]);
+           PhotonNetwork.Destroy(clones[i]);
         }
+        //데이터 삭제 동기화
+        pv.RPC("RPCClear", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPCClear() {
         objInfo.Clear();
         clones.Clear();
     }
@@ -224,6 +252,11 @@ public class Base : MonoBehaviourPunCallbacks
     //층 오브젝트 자식 중 XYZ레이어면 objmani_star.cs에서 Scale_x로 바꾼다.. 
     public void OnClickScaleXTotal()
     {
+        pv.RPC("RPC_X", RpcTarget.All);        
+    }
+
+    [PunRPC]
+    void RPC_X() {
         for (int i = 0; i < floor.Length; i++)
         {
             //~층이 활성화인 경우
@@ -250,8 +283,13 @@ public class Base : MonoBehaviourPunCallbacks
 
     }
 
-
     public void OnClickScaleYTotal()
+    {
+        pv.RPC("RPC_Y", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPC_Y()
     {
         for (int i = 0; i < floor.Length; i++)
         {
@@ -279,8 +317,13 @@ public class Base : MonoBehaviourPunCallbacks
 
     }
 
-
     public void OnClickScaleZTotal()
+    {
+        pv.RPC("RPC_Z", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPC_Z()
     {
         for (int i = 0; i < floor.Length; i++)
         {
@@ -307,6 +350,7 @@ public class Base : MonoBehaviourPunCallbacks
         }
 
     }
+
 
     //미니어쳐 함수
     //송도 작은 구역과 함께 나타나게 수정하기
