@@ -97,7 +97,10 @@ namespace MRTK.Tutorials.MultiUserCapabilities
         private void CreateInteractableObjects()
         {
             var position = roverExplorerLocation.position;
-            var positionOnTopOfSurface = new Vector3(position.x, position.y + roverExplorerLocation.localScale.y / 2,
+            var positionOnTopOfSurface = new Vector3(position.x, position.y 
+                //¤²¼öÁ¤Áß
+                //+ roverExplorerLocation.localScale.y / 2
+                ,
                 position.z);
 
             var go = PhotonNetwork.Instantiate(roverExplorerPrefab.name, positionOnTopOfSurface,

@@ -433,8 +433,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4633143209034538790}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.26, y: -0.52, z: 1.56}
-  m_LocalScale: {x: 2.2102716, y: 1.30824, z: 4.3194942}
+  m_LocalPosition: {x: -3, y: 0, z: -3}
+  m_LocalScale: {x: 2, y: 1.5, z: 3}
   m_Children: []
   m_Father: {fileID: 4005337838904104612}
   m_RootOrder: 0
@@ -533,7 +533,7 @@ MonoBehaviour:
   pivotDirection: 1
   pivotDirectionOrient: 0
   manualPivotDirection: {x: 0, y: 1, z: 0}
-  manualPivotLocalPosition: {x: 0, y: 0, z: -0.1}
+  manualPivotLocalPosition: {x: 0.5, y: 0.5, z: -0.5}
   pivotDistance: 0.25
   toolTipText: 1F
   anchor: {fileID: 0}
@@ -580,8 +580,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4633143209398683790}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.26, y: -0.61000013, z: 1.56}
-  m_LocalScale: {x: 2.2102716, y: 1.30824, z: 4.3194942}
+  m_LocalPosition: {x: -3, y: 0, z: -3}
+  m_LocalScale: {x: 2, y: 1.5, z: 3}
   m_Children: []
   m_Father: {fileID: 4005337839811461958}
   m_RootOrder: 0
@@ -680,9 +680,9 @@ MonoBehaviour:
   pivotDirection: 1
   pivotDirectionOrient: 0
   manualPivotDirection: {x: 0, y: 1, z: 0}
-  manualPivotLocalPosition: {x: 0, y: 0, z: -0.1}
+  manualPivotLocalPosition: {x: 0.5, y: 0.5, z: -0.5}
   pivotDistance: 0.25
-  toolTipText: 1F
+  toolTipText: 3F
   anchor: {fileID: 0}
 --- !u!114 &4633143209398683784
 MonoBehaviour:
@@ -727,8 +727,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4633143210463879555}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.26, y: -0.5899999, z: 1.56}
-  m_LocalScale: {x: 2.2102716, y: 1.30824, z: 4.3194942}
+  m_LocalPosition: {x: -3, y: 0, z: -3}
+  m_LocalScale: {x: 2, y: 1.5, z: 3}
   m_Children: []
   m_Father: {fileID: 4005337840105204463}
   m_RootOrder: 0
@@ -827,9 +827,9 @@ MonoBehaviour:
   pivotDirection: 1
   pivotDirectionOrient: 0
   manualPivotDirection: {x: 0, y: 1, z: 0}
-  manualPivotLocalPosition: {x: 0, y: 0, z: -0.1}
+  manualPivotLocalPosition: {x: 0.5, y: 0.5, z: -0.5}
   pivotDistance: 0.25
-  toolTipText: 1F
+  toolTipText: 2F
   anchor: {fileID: 0}
 --- !u!114 &4633143210463879677
 MonoBehaviour:

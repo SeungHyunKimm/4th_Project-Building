@@ -109,8 +109,8 @@ public class Base : MonoBehaviourPunCallbacks
     public void OnClickExportData() {
         for (int i = 0; i < objInfo.Count; i++)
         {
-            objInfo[i].pos = clones[i].transform.localPosition;
-            objInfo[i].rot = clones[i].transform.localEulerAngles;
+            objInfo[i].pos = clones[i].transform.position;
+            objInfo[i].rot = clones[i].transform.eulerAngles;
             objInfo[i].scale = clones[i].transform.localScale;
         }
         // UserData> Data > ObjInfo 순
@@ -127,11 +127,9 @@ public class Base : MonoBehaviourPunCallbacks
         file.Write(byteData, 0, byteData.Length);
         // 닫아주기!!!
         file.Close();
-
-        print(json);
     }
 
-
+    
     public void OnClickCreate(int[] idx, Vector3 pos, Vector3 rot, Vector3 scale)
     {
         // if (!PhotonNetwork.IsMasterClient) return;
@@ -183,11 +181,13 @@ public class Base : MonoBehaviourPunCallbacks
         }
         else { }
 
-        tem.transform.SetParent(parent);
         ObjInfo2 info = new ObjInfo2();
+        tem.transform.SetParent(parent);
         info.scale = tem.transform.localScale = scale;
-        info.pos = tem.transform.localPosition = pos;
-        info.rot = tem.transform.localEulerAngles = rot;
+        info.pos = tem.transform.position = pos
+            //+ new Vector3(0, -.5f, 0)
+            ;
+        info.rot = tem.transform.eulerAngles = rot;
 
         for (int i = 0; i < idx.Length; i++)
         {

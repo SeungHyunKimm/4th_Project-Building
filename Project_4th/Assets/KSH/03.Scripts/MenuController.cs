@@ -97,7 +97,6 @@ public class MenuController : MonoBehaviour
         {
             //rpc처리하기 임포트 시 데이터 못불러옴 
             OnClickImport();
-            print(BS.clones.Count);
         }
     }
 
@@ -271,7 +270,8 @@ public class MenuController : MonoBehaviour
             idx[1] = a.transform.GetSiblingIndex()+b;
         }
 
-        BS.OnClickCreate(idx, SubMenu.transform.position + Vector3.forward, Vector3.zero, Vector3.one);
+        Vector3 pos = transform.position + Vector3.forward*.2f;
+        BS.OnClickCreate(idx, pos, Vector3.zero, Vector3.one);
     }
 
     
