@@ -30,6 +30,7 @@ public class ObjectData2
 
 public class Base : MonoBehaviourPunCallbacks
 {
+    #region 변수들
     List<ObjInfo2> objInfo = new List<ObjInfo2>();
     public List<GameObject> clones = new List<GameObject>();
 
@@ -47,6 +48,7 @@ public class Base : MonoBehaviourPunCallbacks
     int listidx;
     Transform mini;
     public GameObject conta;
+    #endregion
 
     void Start()
     {
@@ -83,7 +85,7 @@ public class Base : MonoBehaviourPunCallbacks
         }
     }
 
-
+    #region 데이터 불러오기 / 내보내기
     public void OnClickImportData() {
         OnClickDelete();
         string path = Application.streamingAssetsPath + "/Building_data.json";
@@ -131,8 +133,9 @@ public class Base : MonoBehaviourPunCallbacks
         // 닫아주기!!!
         file.Close();
     }
+    #endregion 
 
-
+    #region 빌딩 아이템 생성
     public void OnClickCreate(int[] idx, Vector3 pos, Vector3 rot, Vector3 scale)
     {
         // if (!PhotonNetwork.IsMasterClient) return;
@@ -142,11 +145,16 @@ public class Base : MonoBehaviourPunCallbacks
         if (idx[0] == 2) { obj = products; }
 
         //GameObject a = Instantiate(obj[idx[1]]);
-        //포톤뷰가 붙어있어 그냥 복제 불가능, 포톤네트워크 통해 복제하되 위치, 회전, 크기는 아래에서 조절할 것이므로 아무 값이나 넣자.
-        tem = PhotonNetwork.Instantiate(obj[idx[1]].name, Vector3.one * 1000, Quaternion.identity);
+       // 포톤으로 삭제 시 마스터가 생성한게 아니라고 안삭제된다. 마스터만 생성하게 하자
+        pv.RPC("RPCMasterCreate", RpcTarget.MasterClient, obj[idx[1]].name);
         pv.RPC("RPCObjDataAdd", RpcTarget.All, idx, pos, rot, scale, obj[idx[1]].name);
     }
 
+    [PunRPC]
+    void RPCMasterCreate(string name) {
+        //포톤뷰가 붙어있어 그냥 복제 불가능, 포톤네트워크 통해 복제하되 위치, 회전, 크기는 아래에서 조절할 것이므로 아무 값이나 넣자.
+        tem = PhotonNetwork.Instantiate(name, Vector3.one * 1000, Quaternion.identity);
+    }
     [PunRPC]
     void RPCObjDataAdd(int[] idx, Vector3 pos, Vector3 rot, Vector3 scale, string name) {
 
@@ -159,10 +167,12 @@ public class Base : MonoBehaviourPunCallbacks
             {
                 if (temp[i].name.Contains(name))
                 {
-                    print(temp[i].transform.parent);
+                    //print(temp[i].transform.parent);
                     if (temp[i].transform.parent == null)
+                    {
                         tem = temp[i];
-                    break;
+                        break;
+                    }
                 }
 
             }
@@ -188,7 +198,7 @@ public class Base : MonoBehaviourPunCallbacks
         tem.transform.SetParent(parent);
         info.scale = tem.transform.localScale = scale;
         info.pos = tem.transform.position = pos
-            //+ new Vector3(0, -.5f, 0)
+            //+ new Vector3(0, .3f, 0)
             ;
         info.rot = tem.transform.eulerAngles = rot;
 
@@ -204,11 +214,14 @@ public class Base : MonoBehaviourPunCallbacks
         tem = null;
 
     }
+
     void OnClickCreate(ObjInfo2 info)
     {
         OnClickCreate(info.objidx, info.pos, info.rot, info.scale);
     }
+    #endregion
 
+    #region 삭제
     // 아이템 없에는 함수
     // 내가 어떤걸 집었는지 알 수 없어 매개변수로 담게 만듬
     public void OnClickDestroy(GameObject a)
@@ -217,9 +230,8 @@ public class Base : MonoBehaviourPunCallbacks
         listidx = clones.IndexOf(a);
         pv.RPC("RPCDataRemove", RpcTarget.All, listidx);
         //a.transform.position = Vector3.one * 1000;
-        //디스트로이하면 mrtk자체 오류남
         //Destroy(a);
-        PhotonNetwork.Destroy(a);
+        //PhotonNetwork.Destroy(a);
     }
 
     // 데이터 부분삭제 동기화
@@ -227,8 +239,9 @@ public class Base : MonoBehaviourPunCallbacks
     void RPCDataRemove(int list) {
 
         GameObject a = clones[list];
-        //a.transform.position = Vector3.one * 1000;
-        //a.SetActive(false);
+        //디스트로이하면 mrtk자체 오류남
+        a.transform.position = Vector3.one * 1000;
+        a.SetActive(false);
         objInfo.RemoveAt(list);
         clones.RemoveAt(list);
     }
@@ -248,21 +261,41 @@ public class Base : MonoBehaviourPunCallbacks
 
     public void OnClickDelete()
     {
-        for (int i = 0; i < clones.Count; i++)
+        if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Destroy(clones[i]);
+            for (int i = 0; i < clones.Count; i++)
+            {
+                PhotonNetwork.Destroy(clones[i]);
             //clones[i].SetActive(false);
+            }
+        }
+        else 
+        { 
+          pv.RPC("RPCMasterDestroy", RpcTarget.MasterClient);
         }
         //데이터 삭제 동기화
         pv.RPC("RPCClear", RpcTarget.All);
     }
 
     [PunRPC]
-    void RPCClear() {
+    void RPCClear()
+    {
         objInfo.Clear();
         clones.Clear();
     }
 
+    [PunRPC]
+    void RPCMasterDestroy() {
+    
+            for (int i = 0; i < clones.Count; i++)
+            {
+                PhotonNetwork.Destroy(clones[i]);
+            }
+            
+    }
+    #endregion
+
+    #region 스케일 조절
     //층 오브젝트 자식 중 XYZ레이어면 objmani_star.cs에서 Scale_x로 바꾼다.. 
     public void OnClickScaleXTotal()
     {
@@ -364,18 +397,12 @@ public class Base : MonoBehaviourPunCallbacks
         }
 
     }
+    #endregion
 
-
-    //미니어쳐 함수
+    #region    //미니어쳐 함수
     //송도 작은 구역과 함께 나타나게 수정하기
-    //그냥 베이스를 콘타의 자식으로 우선 해두고 콘타 메쉬를 비활성화 하자..?
-    //** objstar랑 nearGrab, pv(takeover), ownershiptransfer, netsyc_star 추가되고
-    // 메쉬 콜라이더 있는 콘타프리펩 퍼블릭으로 가져오기(convex!)
-    //** 콘타랑 베이스 프리펩풀에 넣기 베이스 이름은 미니로 변경
-    //**포톤으로 복제하기
-    //미니를 콘타의 자식으로 바꾸기
-    //미니 위치 조금 위로 만들기
-
+    // 초반에는 베이스를 콘타의 자식으로 두고 콘타도 포톤프리펩화하려했으나
+    // 그냥 별개로 생성 후 특정 포인트를 부딪히면 콘타가 미니어쳐 빌딩의 자식이 되게 코드 짬.
     public void OnClickMini(Transform player) {
 
         if (PhotonNetwork.PrefabPool is DefaultPool pool) {
@@ -416,15 +443,19 @@ public class Base : MonoBehaviourPunCallbacks
         // 포톤 접속 시 플레이어 찾을 수 없어 매개변수로 받아 실행하자.
         mini.position = pos + Vector3.forward * .1f;
         Transform a = Instantiate(conta).transform;
+        a.localScale = Vector3.one * .0125f;
         a.position = new Vector3(mini.position.x, mini.position.y - .5f , mini.position.x);
         mini = null;
     }
+    #endregion
 
+    //공간인식용
     public void GetShared(Transform parent)
     {
-        // 마스터면 리턴하기 두번째 유저만 앵커 가져와야 함
-        if (PhotonNetwork.IsMasterClient) return;
         SharingModuleScript sms = parent.GetComponent<SharingModuleScript>();
+        // 마스터면 리턴하기 다른 유저만 앵커 가져와야 함
+        if (PhotonNetwork.IsMasterClient) return;
+       // AnchorModuleScript ams = parent.GetComponent<AnchorModuleScript>();
         sms.GetAzureAnchor();
-    }
+        }
 }

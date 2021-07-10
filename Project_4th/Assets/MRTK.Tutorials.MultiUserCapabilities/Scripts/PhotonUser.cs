@@ -9,6 +9,7 @@ namespace MRTK.Tutorials.MultiUserCapabilities
     {
         public PhotonView pv;
         private string username;
+        int set = 0;
 
         private void Start()
         {
@@ -37,6 +38,7 @@ namespace MRTK.Tutorials.MultiUserCapabilities
             Debug.Log("\nPhotonUser.PunRPC_ShareAzureAnchorId()");
             Debug.Log("GenericNetworkManager.instance.azureAnchorId: " + GenericNetworkManager.Instance.azureAnchorId);
             Debug.Log("Azure Anchor ID shared by user: " + pv.Controller.UserId);
+            set = 1;
         }
 
         public void ShareAzureAnchorId()
@@ -47,6 +49,7 @@ namespace MRTK.Tutorials.MultiUserCapabilities
             else
                 Debug.LogError("PV is null");
         }
+
         IEnumerator ASA() {
            
             //혼자 접속 중이면 while 돌기
@@ -55,22 +58,51 @@ namespace MRTK.Tutorials.MultiUserCapabilities
             yield return null;
             }
 
-            AnchorModuleScript ams = transform.parent.GetComponent<AnchorModuleScript>();
-            SharingModuleScript sms = transform.parent.GetComponent<SharingModuleScript>();
+            GameObject anchor = GameObject.Find("Photon_Location");
+            AnchorModuleScript ams = anchor.GetComponent<AnchorModuleScript>();
+            SharingModuleScript sms = anchor.GetComponent<SharingModuleScript>();
 
-            if (PhotonNetwork.IsMasterClient) {
-            // 둘 이상이면 
-            //앵커모듈 동기화하기
-            ams.StartAzureSession();
-            // 유저의 부모는 포톤로케이션(테이블앵커 붙어있음);
-            ams.CreateAzureAnchor(transform.parent.gameObject);
-            sms.ShareAzureAnchor();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                // 둘 이상이면 
+                ams.StartAzureSession();
+                // 유저의 부모는 포톤로케이션(테이블앵커 붙어있음)이지만 바로 생성될 때는 아니다..;
+                // 세션 시작하고 정보받는 대기 시간 있음.. bool만들어 코루틴 넣음.. start 시 true로 create 시 false로 바뀜
+                while (ams.isdone == false)
+                {
+                    yield return null;
+                }
+                ams.CreateAzureAnchor(anchor);
+                // 이것도 대기시간 있음
+                while (ams.isdone == true)
+                {
+                    yield return null;
+                }
+                //앵커모듈 쉐어 rpc로 쏴주는게 있어서 대기시간 만듬
+                sms.ShareAzureAnchor();
+                // 다른 접속자도 동일하게 대기해야 되서 인트값 변경으로 넣어줌
+                while (set == 0)
+                {
+                    yield return null;
+                }
+                pv.RPC("RPCAllSet", RpcTarget.OthersBuffered);
             }
-            else {
-            // 내가 마스터가 아니면 1초 후 세션 시작하기
-            yield return new WaitForSeconds(3);
+            //else {
+
+            //    while (set == 0)
+            //    {
+            //        yield return null;
+            //    }
+            //    ams.StartAzureSession();
+            //}
+           
+        }
+
+        [PunRPC]
+        void RPCAllSet() {
+            GameObject anchor = GameObject.Find("Photon_Location");
+            AnchorModuleScript ams = anchor.GetComponent<AnchorModuleScript>();
             ams.StartAzureSession();
-            }
         }
     }
 }

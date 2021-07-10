@@ -23,13 +23,13 @@ public class AnchorModuleScript : MonoBehaviour
     // Anchor ID for anchor stored in Azure (provided by Azure) 
     public string currentAzureAnchorID = "";
 
-    private SpatialAnchorManager cloudManager;
+    public  SpatialAnchorManager cloudManager;
     private CloudSpatialAnchor currentCloudAnchor;
     private AnchorLocateCriteria anchorLocateCriteria;
     private CloudSpatialAnchorWatcher currentWatcher;
 
     private readonly Queue<Action> dispatchQueue = new Queue<Action>();
-
+    public bool isdone = false;
     #region Unity Lifecycle
     void Start()
     {
@@ -88,8 +88,13 @@ public class AnchorModuleScript : MonoBehaviour
         await cloudManager.StartSessionAsync();
 
         Debug.Log("Azure session started successfully");
+        StartCoroutine(WaitforReady());
     }
 
+    IEnumerator WaitforReady() {
+        yield return new WaitForSeconds(1);
+        isdone = true;
+    }
     public async void StopAzureSession()
     {
         Debug.Log("\nAnchorModuleScript.StopAzureSession()");
@@ -175,6 +180,8 @@ public class AnchorModuleScript : MonoBehaviour
                 // Update the current Azure anchor ID
                 Debug.Log($"Current Azure anchor ID updated to '{currentCloudAnchor.Identifier}'");
                 currentAzureAnchorID = currentCloudAnchor.Identifier;
+                
+                StartCoroutine(WaitforCreate());
             }
             else
             {
@@ -188,6 +195,10 @@ public class AnchorModuleScript : MonoBehaviour
         {
             Debug.Log(ex.ToString());
         }
+    }
+    IEnumerator WaitforCreate() {
+        yield return new WaitForSeconds(1);
+        isdone = false;
     }
 
     public void RemoveLocalAnchor(GameObject theObject)

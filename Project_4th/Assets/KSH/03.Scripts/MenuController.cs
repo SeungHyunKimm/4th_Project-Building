@@ -270,7 +270,7 @@ public class MenuController : MonoBehaviour
             idx[1] = a.transform.GetSiblingIndex()+b;
         }
 
-        Vector3 pos = transform.position + Vector3.forward*.2f;
+        Vector3 pos = transform.position + Vector3.forward*.5f;
         BS.OnClickCreate(idx, pos, Vector3.zero, Vector3.one);
     }
 
