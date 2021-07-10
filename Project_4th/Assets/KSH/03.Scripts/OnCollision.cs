@@ -10,11 +10,10 @@ public class OnCollision : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        print("충돌 감지 완료");
         
-        bs = GameObject.Find("Base").GetComponent<Base>();
+        bs = GameObject.Find("Base(Clone)").GetComponent<Base>();
 
-        if (other.transform.name == "Mini")
+        if (other.transform.name.Contains("Mini"))
         {
             // 미니어쳐랑 부딧치면 비활성화만 하자
             //other.transform.position = Vector3.one * 1000;
@@ -35,6 +34,7 @@ public class OnCollision : MonoBehaviour
             bs.OnClickDestroy(other.gameObject);
         }
 
+        print("충돌 감지 완료");
     }
 
     

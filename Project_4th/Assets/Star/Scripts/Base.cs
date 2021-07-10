@@ -45,6 +45,9 @@ public class Base : MonoBehaviourPunCallbacks
 
     GameObject tem;
     int listidx;
+    Transform mini;
+    public GameObject conta;
+
     void Start()
     {
         pv = GetComponent<PhotonView>();
@@ -129,7 +132,7 @@ public class Base : MonoBehaviourPunCallbacks
         file.Close();
     }
 
-    
+
     public void OnClickCreate(int[] idx, Vector3 pos, Vector3 rot, Vector3 scale)
     {
         // if (!PhotonNetwork.IsMasterClient) return;
@@ -214,7 +217,6 @@ public class Base : MonoBehaviourPunCallbacks
         listidx = clones.IndexOf(a);
         pv.RPC("RPCDataRemove", RpcTarget.All, listidx);
         //a.transform.position = Vector3.one * 1000;
-        //a.SetActive(false);
         //디스트로이하면 mrtk자체 오류남
         //Destroy(a);
         PhotonNetwork.Destroy(a);
@@ -223,21 +225,33 @@ public class Base : MonoBehaviourPunCallbacks
     // 데이터 부분삭제 동기화
     [PunRPC]
     void RPCDataRemove(int list) {
+
+        GameObject a = clones[list];
+        //a.transform.position = Vector3.one * 1000;
+        //a.SetActive(false);
         objInfo.RemoveAt(list);
         clones.RemoveAt(list);
     }
 
-    //데이터 없이 삭제만 한다.
+    //데이터 없이 삭제만 한다. >> 삭제 오류로 비활성화
     public void OnClickDestroy(Collider other)
     {
-        PhotonNetwork.Destroy(other.gameObject);
+        pv.RPC("RPCItemInactive", RpcTarget.All, other.gameObject.name);
+    }
+
+    [PunRPC]
+    void RPCItemInactive(string name) {
+        GameObject a = GameObject.Find(name);
+        a.transform.position = Vector3.one * 1000;
+        a.SetActive(false);
     }
 
     public void OnClickDelete()
     {
         for (int i = 0; i < clones.Count; i++)
         {
-           PhotonNetwork.Destroy(clones[i]);
+            PhotonNetwork.Destroy(clones[i]);
+            //clones[i].SetActive(false);
         }
         //데이터 삭제 동기화
         pv.RPC("RPCClear", RpcTarget.All);
@@ -252,7 +266,7 @@ public class Base : MonoBehaviourPunCallbacks
     //층 오브젝트 자식 중 XYZ레이어면 objmani_star.cs에서 Scale_x로 바꾼다.. 
     public void OnClickScaleXTotal()
     {
-        pv.RPC("RPC_X", RpcTarget.All);        
+        pv.RPC("RPC_X", RpcTarget.All);
     }
 
     [PunRPC]
@@ -368,29 +382,42 @@ public class Base : MonoBehaviourPunCallbacks
             if (pool.ResourceCache.ContainsKey("Mini"))
             {
                 pool.ResourceCache.Remove("Mini");
-               pool.ResourceCache.Add("Mini", gameObject);
+                pool.ResourceCache.Add("Mini", gameObject);
             }
-            else { 
-               pool.ResourceCache.Add("Mini", gameObject);
+            else {
+                pool.ResourceCache.Add("Mini", gameObject);
             }
         }
 
-       // 건물 본체 복사
-        Transform mini = PhotonNetwork.Instantiate("Mini", Vector3.one * 1000, Quaternion.identity).transform;
-       
+        // 건물 본체 복사
+        mini = PhotonNetwork.Instantiate("Mini", Vector3.one * 1000, Quaternion.identity).transform;
         //포톤뷰로 그냥 복사가 불가능해 변경
         // Transform mini = Instantiate(gameObject).transform;
-        //mini.name = "Mini";
-        mini.GetComponent<Base>().enabled = false ;
+        pv.RPC("RPCMini", RpcTarget.All, player.position);
+    }
+
+    [PunRPC]
+    void RPCMini(Vector3 pos) {
+
+        if (mini == null) {
+            mini = GameObject.Find("Base(Clone)(Clone)").transform;
+        }
+        mini.name = "Mini";
+    
+        mini.GetComponent<Base>().enabled = false;
         // 잡고 조정 가능하게 하자
         mini.GetComponent<BoundsControl>().enabled = true;
         mini.GetComponent<ObjectManipulator>().enabled = true;
         mini.GetComponent<NearInteractionGrabbable>().enabled = true;
+        mini.gameObject.AddComponent<Attach>();
+
         // 미니어쳐라 10cm
         mini.localScale = Vector3.one * .0125f;
         // 포톤 접속 시 플레이어 찾을 수 없어 매개변수로 받아 실행하자.
-        mini.position = player.position + Vector3.forward * .1f;
-
+        mini.position = pos + Vector3.forward * .1f;
+        Transform a = Instantiate(conta).transform;
+        a.position = new Vector3(mini.position.x, mini.position.y - .5f , mini.position.x);
+        mini = null;
     }
 
     public void GetShared(Transform parent)
