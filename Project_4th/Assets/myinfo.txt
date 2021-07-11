@@ -3,5 +3,8 @@
     "height": 0,
     "name": "",
     "weight": 0,
-    "family": []
+    "family": [],
+    "ID": 0,
+    "Level": 0,
+    "Class": ""
 }
