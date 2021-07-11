@@ -5,6 +5,7 @@ using UnityEditor;
 using System;
 using System.IO;
 using System.Text;
+using UnityEngine.Networking;
 
 #region Json 클래스 선언
 
@@ -49,6 +50,10 @@ public class BdEditor : Editor
     static List<ObjectData> objdata = new List<ObjectData>();
     //마우스로 오브젝트 제거 시 ObjInfo도 제거해줘야 해서 순번 확인으로 만드는 gameobj 리스트
     static List<GameObject> clones = new List<GameObject>();
+    #endregion
+
+    #region 서버용 변수
+    Base bs;
     #endregion
 
     BdTool bd;
@@ -414,18 +419,24 @@ public class BdEditor : Editor
         ObjectData obj = new ObjectData();
         // ObjectData  형식을 제이슨을 통해 스트링으로변환
         obj.info = objInfo;
-        string json = JsonUtility.ToJson(obj, true);
+        string json = JsonUtility.ToJson(obj);
+
+        #region 로컬경로
         Debug.Log(json);
 
         // 컴퓨터에 빈 텍스트 파일 생성 
-        FileStream file = new FileStream(Application.streamingAssetsPath +"Building_data.json", FileMode.Create);
+        FileStream file = new FileStream(Application.streamingAssetsPath + "Building_data.json", FileMode.Create);
         // 제이슨 데이터를 텍스트로 전환
         byte[] byteData = Encoding.UTF8.GetBytes(json);
         // 파일 덮어쓰기
         file.Write(byteData, 0, byteData.Length);
         // 닫아주기!!!
         file.Close();
+        #endregion
 
+        //수정필요
+        //bs = building.GetComponent<Base>();
+        //bs.EditorSetData(json);
     }
 
     void ImportData()
@@ -436,6 +447,7 @@ public class BdEditor : Editor
 
         OnClickDelete();
         OnClickCreate();
+        #region 로컬경로
         // 열기
         FileStream file = new FileStream(path, FileMode.Open);
         //저장된 데이터 byte로 담기(불러오기 = 읽어오기)
@@ -452,28 +464,21 @@ public class BdEditor : Editor
         {
             OnClickCreate(obj.info[i]);
         }
+        #endregion
+
+        //수정필요
+        //bs = building.GetComponent<Base>();
+        //string a = bs.Editorinfo();
+
+        //ObjectData obj = JsonUtility.FromJson<ObjectData>(a);
+
+        //for (int i = 0; i < obj.info.Count; i++)
+        //{
+        //    OnClickCreate(obj.info[i]);
+        //}
+
     }
 
-    //유저1번 2번 3번.. 으로 데이터 추가해 파일 뽑으려 만든 함수.. 수정필요
-    void FinalData(ObjectData data)
-    {
-        // 매개변수 다시 설정하기
-        objdata.Add(data);
-        UserData obj = new UserData();
-        obj.data = objdata;
-        obj.userID = "User_no." + objdata.Count;
-        Debug.Log("빌딩 정보 갯수 : " + objdata.Count);
-
-        string json = JsonUtility.ToJson(obj, true);
-        Debug.Log(json);
-    }
-
-    // 유저123.... 모든 유저 정보데이터 없에주기
-    void AllDataReset()
-    {
-        objdata.Clear();
-        OnClickDelete();
-    }
 
 
 }

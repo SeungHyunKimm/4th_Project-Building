@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.IO;
-using System.Text;
+//using System.IO;
+//using System.Text;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using Photon.Pun;
 using Photon.Realtime;
 using Microsoft.MixedReality.Toolkit.Input;
 using MRTK.Tutorials.MultiUserCapabilities;
+using UnityEngine.Networking;
 
 
 [Serializable]
@@ -48,6 +49,8 @@ public class Base : MonoBehaviourPunCallbacks
     int listidx;
     Transform mini;
     public GameObject conta;
+
+    public string infos = null;
     #endregion
 
     void Start()
@@ -85,31 +88,82 @@ public class Base : MonoBehaviourPunCallbacks
         }
     }
 
-    #region 데이터 불러오기 / 내보내기
-    public void OnClickImportData() {
-        OnClickDelete();
-        string path = Application.streamingAssetsPath + "/Building_data.json";
-        //파일 있니?
-        if (!File.Exists(path)) return;
+ #region 데이터 불러오기 / 내보내기
 
-        // 열기
-        FileStream file = new FileStream(path, FileMode.Open);
-        //저장된 데이터 byte로 담기(불러오기 = 읽어오기)
-        byte[] byteData = new byte[file.Length];
-        file.Read(byteData, 0, byteData.Length);
-        //다시 닫아주기!
-        file.Close();
+    IEnumerator GetData() {
 
-        //텍스트 파일이므로 byte를 스트링 변환해주기
-        string txt = Encoding.UTF8.GetString(byteData);
-        //다시 제이슨을 통해  ObjectData 형식으로 변환시킨다.
-        ObjectData2 obj = JsonUtility.FromJson<ObjectData2>(txt);
-        for (int i = 0; i < obj.info.Count; i++)
+        WWWForm form = new WWWForm();
+        form.AddField("user", 1);
+
+        var www = new WWW("https://objdata-bfikq.run.goorm.io/getd", form);
+        yield return www;
+        
+        if (string.IsNullOrEmpty(www.error))
         {
-            OnClickCreate(obj.info[i]);
+          // print(www.text);
+
+            ObjectData2 obj = JsonUtility.FromJson<ObjectData2>(www.text);
+
+            for (int i = 0; i < obj.info.Count; i++)
+            {
+                OnClickCreate(obj.info[i]);
+            }
+
         }
+        else 
+        {
+            Debug.Log("error : " + www.error);
+        }
+
     }
 
+    public void OnClickImportData() {
+        OnClickDelete();
+
+        #region 로컬경로로 파일 가져오기 system.IO, text 사용해야 함
+        //string path = Application.streamingAssetsPath + "/Building_data.json";
+        ////파일 있니?
+        //if (!File.Exists(path)) return;
+
+        //// 열기
+        //FileStream file = new FileStream(path, FileMode.Open);
+        ////저장된 데이터 byte로 담기(불러오기 = 읽어오기)
+        //byte[] byteData = new byte[file.Length];
+        //file.Read(byteData, 0, byteData.Length);
+        ////다시 닫아주기!
+        //file.Close();
+
+        ////텍스트 파일이므로 byte를 스트링 변환해주기
+        //string txt = Encoding.UTF8.GetString(byteData);
+        ////다시 제이슨을 통해  ObjectData 형식으로 변환시킨다.
+        //ObjectData2 obj = JsonUtility.FromJson<ObjectData2>(txt);
+
+        //for (int i = 0; i < obj.info.Count; i++)
+        //{
+        //    OnClickCreate(obj.info[i]);
+        //}
+        #endregion
+        StartCoroutine(GetData());
+    }
+
+     IEnumerator SetData(string j) {
+        WWWForm form = new WWWForm();
+        form.AddField("infos", j);
+//        form.AddBinaryData("data", Encoding.UTF8.GetBytes(j));
+
+        UnityWebRequest www = UnityWebRequest.Post("https://objdata-bfikq.run.goorm.io/setd", form);
+        yield return www.SendWebRequest();
+
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Debug.Log("Data upload complete!");
+        }
+
+    }
 
     public void OnClickExportData() {
         for (int i = 0; i < objInfo.Count; i++)
@@ -123,15 +177,49 @@ public class Base : MonoBehaviourPunCallbacks
         // ObjectData  형식을 제이슨을 통해 스트링으로변환
         obj.info = objInfo;
         string json = JsonUtility.ToJson(obj);
+       
+        StartCoroutine(SetData(json));
 
-        // 컴퓨터에 빈 텍스트 파일 생성
-        FileStream file = new FileStream(Application.streamingAssetsPath + "/Building_data.json", FileMode.Create);
-        // 제이슨 데이터를 텍스트로 전환
-        byte[] byteData = Encoding.UTF8.GetBytes(json);
-        // 파일 덮어쓰기
-        file.Write(byteData, 0, byteData.Length);
-        // 닫아주기!!!
-        file.Close();
+        //// 컴퓨터에 빈 텍스트 파일 생성
+        //FileStream file = new FileStream(Application.streamingAssetsPath + "/Building_data.json", FileMode.Create);
+        //// 제이슨 데이터를 텍스트로 전환
+        //byte[] byteData = Encoding.UTF8.GetBytes(json);
+        //// 파일 덮어쓰기
+        //file.Write(byteData, 0, byteData.Length);
+        //// 닫아주기!!!
+        //file.Close();
+    }
+
+    //아래는 에디터 모드에서 코루틴 실행하려면 패키지 필요해서 따로 생성함
+
+    public void EditorSetData(string j)
+    {
+        StartCoroutine(SetData(j));
+    }
+    IEnumerator EditorGetData()
+    {
+
+        WWWForm form = new WWWForm();
+        form.AddField("user", 1);
+
+        var www = new WWW("https://objdata-bfikq.run.goorm.io/getd", form);
+        yield return www;
+
+        if (string.IsNullOrEmpty(www.error))
+        {
+            infos = www.text;
+        }
+        else
+        {
+            Debug.Log("error : " + www.error);
+        }
+      
+    }
+
+    public string Editorinfo()
+    {
+        StartCoroutine(EditorGetData());
+        return infos;
     }
     #endregion 
 
